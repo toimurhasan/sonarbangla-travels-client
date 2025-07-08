@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -7,7 +8,7 @@ const router = createBrowserRouter([
   { path: "/community", element: <div>Community Page</div> },
   { path: "/about-us", element: <div>About Us Page</div> },
   { path: "/trips", element: <div>All Trips Page</div> },
-  { path: "/login", element: <div>Login Page</div> },
+  { path: "/login", element: <Login></Login> },
   { path: "/register", element: <div>Register Page</div> },
   { path: "/forgot-password", element: <div>Forgot Password Page</div> },
 
@@ -44,6 +45,5 @@ const router = createBrowserRouter([
   { path: "/dashboard/admin/manage-users", element: <div>Admin Manage Users</div> },
   { path: "/dashboard/admin/manage-candidates", element: <div>Admin Manage Candidates</div> },
 ]);
-
 
 export default router;
