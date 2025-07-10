@@ -1,16 +1,23 @@
 import React from "react";
 import { createBrowserRouter } from "react-router";
 import Login from "../pages/Login";
+import BasicLayout from "../layouts/BasicLayout";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
-  { path: "/", element: <div>Home Page</div> },
-  { path: "/community", element: <div>Community Page</div> },
-  { path: "/about-us", element: <div>About Us Page</div> },
-  { path: "/trips", element: <div>All Trips Page</div> },
-  { path: "/login", element: <Login></Login> },
-  { path: "/register", element: <div>Register Page</div> },
-  { path: "/forgot-password", element: <div>Forgot Password Page</div> },
+  {
+    path: "/",
+    element: <BasicLayout />,
+    children: [
+      { path: "/", element: <div>Home Page</div> },
+      { path: "/community", element: <div>Community Page</div> },
+      { path: "/about-us", element: <div>About Us Page</div> },
+      { path: "/trips", element: <div>All Trips Page</div> },
+      { path: "/login", element: <div>Login Page</div> },
+      { path: "/register", element: <div>Register Page</div> },
+      { path: "/forgot-password", element: <div>Forgot Password Page</div> },
+    ],
+  },
 
   // Package Details & Tour Guide Profile
   { path: "/package/:packageId", element: <div>Package Details Page</div> },
