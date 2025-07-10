@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter } from "react-router";
 import Login from "../pages/Login";
 import BasicLayout from "../layouts/BasicLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -33,24 +34,30 @@ const router = createBrowserRouter([
   { path: "/payment/:bookingId", element: <div>Payment Page</div> },
   { path: "/my-bookings", element: <div>My Bookings Page</div> },
 
-  // Dashboard - Tourist
-  { path: "/dashboard/tourist/manage-profile", element: <div>Tourist Manage Profile</div> },
-  { path: "/dashboard/tourist/my-bookings", element: <div>Tourist My Bookings</div> },
-  { path: "/dashboard/tourist/add-story", element: <div>Tourist Add Story</div> },
-  { path: "/dashboard/tourist/manage-stories", element: <div>Tourist Manage Stories</div> },
-  { path: "/dashboard/tourist/join-tour-guide", element: <div>Tourist Join as Tour Guide</div> },
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+    children: [
+      // Tourist
+      { path: "tourist/manage-profile", element: <div>Tourist Manage Profile</div> },
+      { path: "tourist/my-bookings", element: <div>Tourist My Bookings</div> },
+      { path: "tourist/add-story", element: <div>Tourist Add Story</div> },
+      { path: "tourist/manage-stories", element: <div>Tourist Manage Stories</div> },
+      { path: "tourist/join-tour-guide", element: <div>Tourist Join as Tour Guide</div> },
 
-  // Dashboard - Tour Guide
-  { path: "/dashboard/tour-guide/manage-profile", element: <div>Tour Guide Manage Profile</div> },
-  { path: "/dashboard/tour-guide/assigned-tours", element: <div>Tour Guide Assigned Tours</div> },
-  { path: "/dashboard/tour-guide/add-story", element: <div>Tour Guide Add Story</div> },
-  { path: "/dashboard/tour-guide/manage-stories", element: <div>Tour Guide Manage Stories</div> },
+      // Tour Guide
+      { path: "tour-guide/manage-profile", element: <div>Tour Guide Manage Profile</div> },
+      { path: "tour-guide/assigned-tours", element: <div>Tour Guide Assigned Tours</div> },
+      { path: "tour-guide/add-story", element: <div>Tour Guide Add Story</div> },
+      { path: "tour-guide/manage-stories", element: <div>Tour Guide Manage Stories</div> },
 
-  // Dashboard - Admin
-  { path: "/dashboard/admin/manage-profile", element: <div>Admin Manage Profile</div> },
-  { path: "/dashboard/admin/add-package", element: <div>Admin Add Package</div> },
-  { path: "/dashboard/admin/manage-users", element: <div>Admin Manage Users</div> },
-  { path: "/dashboard/admin/manage-candidates", element: <div>Admin Manage Candidates</div> },
+      // Admin
+      { path: "admin/manage-profile", element: <div>Admin Manage Profile</div> },
+      { path: "admin/add-package", element: <div>Admin Add Package</div> },
+      { path: "admin/manage-users", element: <div>Admin Manage Users</div> },
+      { path: "admin/manage-candidates", element: <div>Admin Manage Candidates</div> },
+    ],
+  },
 ]);
 
 export default router;
