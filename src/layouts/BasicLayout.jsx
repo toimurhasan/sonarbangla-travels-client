@@ -1,17 +1,12 @@
-// import { Outlet } from "react-router-dom";
-
 import { Outlet } from "react-router";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const BasicLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
-      <header>
-        <div className="shadow-md p-4">
-          <h1 className="text-xl font-bold">Tourist Guide</h1>
-          {/* Add your Navbar component here */}
-        </div>
-      </header>
+      <Navbar></Navbar>
 
       {/* Page Content */}
       <main className="flex-grow">
@@ -19,10 +14,7 @@ const BasicLayout = () => {
       </main>
 
       {/* Footer */}
-      <footer className=" text-center p-4">
-        <p>© 2025 Tourist Guide. All rights reserved.</p>
-        {/* Add social links here */}
-      </footer>
+      <Footer></Footer>
     </div>
   );
 };
