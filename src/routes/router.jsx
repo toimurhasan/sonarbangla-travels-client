@@ -6,6 +6,7 @@ import BasicLayout from "../layouts/BasicLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Home from "../pages/Home";
 import PackageDetails from "../pages/PackageDetails";
+import CommunityPage from "../pages/CommunityPage";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     element: <BasicLayout />,
     children: [
       { index: true, element: <Home></Home> },
-      { path: "community", element: <div>Community Page</div> },
+      { path: "community", element: <CommunityPage></CommunityPage> },
       { path: "about-us", element: <div>About Us Page</div> },
       { path: "trips", element: <div>All Trips Page</div> },
       { path: "login", element: <Login></Login> },
