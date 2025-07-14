@@ -15,6 +15,7 @@ import TouristMyBookings from "../dashboard/TouristMyBookings";
 import TouristAddStories from "../dashboard/TouristAddStories";
 import TouristManageStories from "../dashboard/TouristManageStories";
 import TouristJoinTourGuide from "../dashboard/TouristJoinTourGuide";
+import TourGuideDashboard from "../dashboard/TourGuideDashboard";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -58,10 +59,11 @@ const router = createBrowserRouter([
       { path: "tourist/join-tour-guide", element: <TouristJoinTourGuide></TouristJoinTourGuide> },
 
       // Tour Guide
-      { path: "tour-guide/manage-profile", element: <div>Tour Guide Manage Profile</div> },
-      { path: "tour-guide/assigned-tours", element: <div>Tour Guide Assigned Tours</div> },
-      { path: "tour-guide/add-story", element: <div>Tour Guide Add Story</div> },
-      { path: "tour-guide/manage-stories", element: <div>Tour Guide Manage Stories</div> },
+      { path: "tourguide", element: <TourGuideDashboard></TourGuideDashboard> },
+      { path: "tourguide/manage-profile", element: <TourGuideDashboard></TourGuideDashboard> },
+      { path: "tourguide/assigned-tours", element: <div>Tour Guide Assigned Tours</div> },
+      { path: "tourguide/add-story", element: <div>Tour Guide Add Story</div> },
+      { path: "tourguide/manage-stories", element: <div>Tour Guide Manage Stories</div> },
 
       // Admin
       { path: "admin/manage-profile", element: <div>Admin Manage Profile</div> },
