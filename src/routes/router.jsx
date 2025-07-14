@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import PackageDetails from "../pages/PackageDetails";
 import CommunityPage from "../pages/CommunityPage";
 import AboutUs from "../pages/AboutUs";
+import AllTrips from "../pages/AllTrips";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home></Home> },
       { path: "community", element: <CommunityPage></CommunityPage> },
       { path: "about-us", element: <AboutUs></AboutUs> },
-      { path: "trips", element: <div>All Trips Page</div> },
+      { path: "trips", element: <AllTrips></AllTrips> },
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
       { path: "forgot-password", element: <div>Forgot Password Page</div> },
