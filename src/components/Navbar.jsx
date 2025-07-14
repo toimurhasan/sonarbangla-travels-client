@@ -94,10 +94,7 @@ const Navbar = () => {
                 <div class="divider mt-2 mb-0"></div>
                 <li>
                   <Link to={"/"}>Dashboard</Link>
-                </li>
-                <li>
-                  <Link to={"/"}>Offer Announcements</Link>
-                </li>
+                </li> 
                 <li>
                   <button onClick={clickHandler}>Logout</button>
                 </li>

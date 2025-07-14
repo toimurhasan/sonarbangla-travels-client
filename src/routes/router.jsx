@@ -10,6 +10,7 @@ import CommunityPage from "../pages/CommunityPage";
 import AboutUs from "../pages/AboutUs";
 import AllTrips from "../pages/AllTrips";
 import TourGuideProfile from "../pages/TourGuideProfile";
+import TouristManageProfile from "../dashboard/TouristManageProfile";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -45,7 +46,8 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       // Tourist
-      { path: "tourist/manage-profile", element: <div>Tourist Manage Profile</div> },
+      { path: "tourist", element: <TouristManageProfile></TouristManageProfile> },
+      { path: "tourist/manage-profile", element: <TouristManageProfile></TouristManageProfile> },
       { path: "tourist/my-bookings", element: <div>Tourist My Bookings</div> },
       { path: "tourist/add-story", element: <div>Tourist Add Story</div> },
       { path: "tourist/manage-stories", element: <div>Tourist Manage Stories</div> },

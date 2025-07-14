@@ -1,6 +1,7 @@
 // import { Outlet } from "react-router";
 
 import { Outlet } from "react-router";
+import SidebarNav from "../components/SidebarNav";
 
 const DashboardLayout = () => {
   return (
@@ -10,6 +11,7 @@ const DashboardLayout = () => {
         <div className="text-2xl font-bold mb-6">Dashboard</div>
         {/* Add navigation links here based on role (optional) */}
         {/* Example: <Link to="/dashboard/tourist/my-bookings">My Bookings</Link> */}
+        <SidebarNav userRole={"tourist"} />
       </aside>
 
       {/* Main Content */}
