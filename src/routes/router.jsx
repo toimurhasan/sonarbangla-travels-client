@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import BasicLayout from "../layouts/BasicLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Home from "../pages/Home";
+import PackageDetails from "../pages/PackageDetails";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -19,12 +20,11 @@ const router = createBrowserRouter([
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
       { path: "forgot-password", element: <div>Forgot Password Page</div> },
+      // Package Details & Tour Guide Profile
+      { path: "/package/:packageId", element: <PackageDetails></PackageDetails> },
+      { path: "/tour-guide/:guideId", element: <div>Tour Guide Profile Page</div> },
     ],
   },
-
-  // Package Details & Tour Guide Profile
-  { path: "/package/:packageId", element: <div>Package Details Page</div> },
-  { path: "/tour-guide/:guideId", element: <div>Tour Guide Profile Page</div> },
 
   // Stories
   { path: "/stories", element: <div>All Stories Page</div> },
