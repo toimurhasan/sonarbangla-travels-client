@@ -6,7 +6,7 @@ const linksByRole = {
     { to: "/dashboard/tourist/manage-profile", label: "Manage Profile" },
     { to: "/dashboard/tourist/my-bookings", label: "My Bookings" },
     { to: "/dashboard/tourist/manage-stories", label: "Manage Stories" },
-    { to: "/dashboard/tourist/add-stories", label: "Add Stories" },
+    { to: "/dashboard/tourist/add-story", label: "Add Story" },
     { to: "/dashboard/tourist/join-tour-guide", label: "Join as Tour Guide" },
   ],
   tourGuide: [
