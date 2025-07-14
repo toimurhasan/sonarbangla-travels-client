@@ -11,6 +11,7 @@ import AboutUs from "../pages/AboutUs";
 import AllTrips from "../pages/AllTrips";
 import TourGuideProfile from "../pages/TourGuideProfile";
 import TouristManageProfile from "../dashboard/TouristManageProfile";
+import TouristMyBookings from "../dashboard/TouristMyBookings";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       // Tourist
       { path: "tourist", element: <TouristManageProfile></TouristManageProfile> },
       { path: "tourist/manage-profile", element: <TouristManageProfile></TouristManageProfile> },
-      { path: "tourist/my-bookings", element: <div>Tourist My Bookings</div> },
+      { path: "tourist/my-bookings", element: <TouristMyBookings /> },
       { path: "tourist/add-story", element: <div>Tourist Add Story</div> },
       { path: "tourist/manage-stories", element: <div>Tourist Manage Stories</div> },
       { path: "tourist/join-tour-guide", element: <div>Tourist Join as Tour Guide</div> },
