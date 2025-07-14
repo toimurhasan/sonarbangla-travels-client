@@ -9,6 +9,7 @@ import PackageDetails from "../pages/PackageDetails";
 import CommunityPage from "../pages/CommunityPage";
 import AboutUs from "../pages/AboutUs";
 import AllTrips from "../pages/AllTrips";
+import TourGuideProfile from "../pages/TourGuideProfile";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       { path: "forgot-password", element: <div>Forgot Password Page</div> },
       // Package Details & Tour Guide Profile
       { path: "/package/:packageId", element: <PackageDetails></PackageDetails> },
-      { path: "/tour-guide/:guideId", element: <div>Tour Guide Profile Page</div> },
+      { path: "/tour-guide/:guideId", element: <TourGuideProfile></TourGuideProfile> },
     ],
   },
 
