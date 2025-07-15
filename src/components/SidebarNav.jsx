@@ -11,14 +11,17 @@ const linksByRole = {
   ],
   tourGuide: [
     { to: "/dashboard/tourguide/manage-profile", label: "Manage Profile" },
-    { to: "/dashboard/tourguide/my-tours", label: "My Tours" },
-    { to: "/dashboard/tourguide/manage-bookings", label: "Manage Bookings" },
+    { to: "/dashboard/tourguide/assigned-tours", label: "My Assigned Tours" },
+    { to: "/dashboard/tourguide/add-story", label: "Add Story" },
+    { to: "/dashboard/tourguide/manage-stories", label: "Manage Stories" },
   ],
-  admin: [
-    { to: "/dashboard/admin/manage-users", label: "Manage Users" },
-    { to: "/dashboard/admin/manage-content", label: "Manage Content" },
-    { to: "/dashboard/admin/reports", label: "Reports" },
-  ],
+ admin: [
+  { to: "/dashboard/admin/manage-profile", label: "Manage Profile" },
+  { to: "/dashboard/admin/add-package", label: "Add Package" },
+  { to: "/dashboard/admin/manage-users", label: "Manage Users" },
+  { to: "/dashboard/admin/manage-candidates", label: "Manage Candidates" },
+],
+
   // add more roles as needed
 };
 
