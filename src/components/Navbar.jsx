@@ -38,7 +38,7 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="p-2 mr-2 bg-gray-50 border rounded-full border-gray-200 lg:hidden"
+              className="p-2 mr-2  border rounded-full border-gray-500 lg:hidden"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,10 +91,10 @@ const Navbar = () => {
                   <h3>{currentUser.displayName}</h3>
                   <p>{currentUser.email}</p>
                 </div>
-                <div class="divider mt-2 mb-0"></div>
+                <div className="divider mt-2 mb-0"></div>
                 <li>
                   <Link to={"/"}>Dashboard</Link>
-                </li> 
+                </li>
                 <li>
                   <button onClick={clickHandler}>Logout</button>
                 </li>
