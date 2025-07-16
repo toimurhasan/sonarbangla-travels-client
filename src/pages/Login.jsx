@@ -32,7 +32,8 @@ const Login = () => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log(user);
+        // console.log(user);
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         // Handle Errors here.
