@@ -23,6 +23,7 @@ import AdminManageProfile from "../dashboard/AdminManageProfile";
 import AddPackage from "../dashboard/AddPackage";
 import ManageUsers from "../dashboard/ManageUsers";
 import ManageCandidates from "../dashboard/ManageCandidates";
+import ForgetPassword from "../pages/ForgetPassword";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       { path: "trips", element: <AllTrips></AllTrips> },
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
-      { path: "forgot-password", element: <div>Forgot Password Page</div> },
+      { path: "forget-password", element: <ForgetPassword></ForgetPassword> },
       // Package Details & Tour Guide Profile
       { path: "/package/:packageId", element: <PackageDetails></PackageDetails> },
       { path: "/tour-guide/:guideId", element: <TourGuideProfile></TourGuideProfile> },

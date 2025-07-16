@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -18,15 +19,17 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: user.email }), // use actual user info
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          localStorage.setItem("access-token", data.token);
-        });
+      if (user) {
+        fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: user.email }), // use actual user info
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("access-token", data.token);
+          });
+      }
 
       setLoading(false);
     });
@@ -59,6 +62,10 @@ const AuthProvider = ({ children }) => {
   //     return signInWithPopup(auth, githubProvider);
   //   };
 
+  const forgetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   const updateUserInfo = (displayName, photoURL) => {
     return updateProfile(auth.currentUser, {
       displayName,
@@ -73,6 +80,7 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     continueWithGoogle,
     updateUserInfo,
+    forgetPassword,
   };
 
   return <AuthContext value={userInfo}>{!loading && children}</AuthContext>;
