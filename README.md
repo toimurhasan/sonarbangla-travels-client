@@ -1,12 +1,42 @@
-# React + Vite
+# 🧭 ShonarBangla Travels - Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **client-side** of **ShonarBangla Travels** — a travel and tourism web application where users can explore tour packages, apply as tour guides, and share travel stories. This frontend is built using **React** and communicates with the backend API for a full-stack experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Site
 
-## Expanding the ESLint configuration
+> [ShonarBangla Travels](https://sonarbangla-travels.web.app)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Tech Stack
+
+- React
+- React Router DOM
+- TanStack Query (React Query)
+- Tailwind CSS
+- DaisyUI
+- Swiper.js
+- Firebase Authentication
+- JWT Auth
+- Axios / Fetch
+- React Hook Form + Zod
+- MongoDB (via backend)
+- react-toastify
+- react-select
+
+---
+
+## 🚀 Features
+
+- 🔐 Authentication using Firebase & JWT
+- 🧳 Explore Tour Packages
+- 📝 Apply as a Tour Guide
+- 🧍 User & Admin Dashboards
+- 📸 Share and Manage Stories
+- 📦 Add / Edit / Delete Packages (Admin)
+- 📄 Tour Guide Applications (with Accept/Reject logic)
+- 🔎 Search & Filter Users by Name/Email/Role
+- 📄 Pagination in all tables (10 per page)
+- 🎠 Beautiful image carousels with SwiperJS
