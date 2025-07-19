@@ -6,7 +6,7 @@ const TourismTabs = () => {
   const [packages, setPackages] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/random-packages") // 🔁 Replace with your backend URL if different
+    fetch("http://localhost:3000/random-packages") 
       .then((res) => res.json())
       .then((data) => setPackages(data))
       .catch((err) => console.error("Failed to load packages:", err));
@@ -44,10 +44,10 @@ const TourismTabs = () => {
                 <div className="p-4">
                   <p className="text-sm text-gray-500">{pkg.tourType}</p>
                   <h3 className="text-xl font-semibold mb-2">{pkg.tripTitle}</h3>
-                  <p className="text-green-600 font-bold text-lg mb-4">${pkg.price}</p>
+                  <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}TK</p>
                   <button
                     className="btn-primary btn px-4 py-2 rounded transition"
-                    onClick={() => (window.location.href = `/packages/${pkg._id}`)}
+                    onClick={() => (window.location.href = `/package/${pkg._id}`)}
                   >
                     View Package
                   </button>

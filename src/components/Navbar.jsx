@@ -78,6 +78,7 @@ const Navbar = () => {
 
         {currentUser ? (
           <div className="navbar-end gap-2">
+            <ThemeSelector></ThemeSelector>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} className="avatar cursor-pointer">
                 <div className="w-9 rounded-full  shadow-2xl  ">

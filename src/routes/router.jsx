@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: "register", element: <Register></Register> },
       { path: "forget-password", element: <ForgetPassword></ForgetPassword> },
       // Package Details & Tour Guide Profile
-      { path: "/package/:packageId", element: <PackageDetails></PackageDetails> },
+      { path: "/package/:id", element: <PackageDetails></PackageDetails> },
       { path: "/tour-guide/:guideId", element: <TourGuideProfile></TourGuideProfile> },
     ],
   },

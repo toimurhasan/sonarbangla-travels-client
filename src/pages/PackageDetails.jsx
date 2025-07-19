@@ -1,172 +1,105 @@
+// import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { FaUserTie, FaCalendarAlt } from "react-icons/fa";
+import { useParams } from "react-router";
+import BookingModal from "../components/BookingModal";
 
 const PackageDetails = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { id } = useParams();
 
-  const tourPlan = [
-    {
-      day: "Day 01",
-      title: "Explore the Hilltop",
-      description:
-        "Start the journey with a hike up the mountains, enjoy the panoramic view and local culture.",
+  const { data: trip = {}, isLoading } = useQuery({
+    queryKey: ["trip", id],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:3000/api/packages/${id}`);
+      return res.json();
     },
-    {
-      day: "Day 02",
-      title: "River Cruise & Forest Trail",
-      description:
-        "Take a peaceful cruise and visit wildlife reserves. Walk along scenic forest paths.",
-    },
-    {
-      day: "Day 03",
-      title: "Cultural Village Tour",
-      description: "Meet indigenous communities, learn about their lifestyle, food, and crafts.",
-    },
-  ];
+  });
 
-  const tourGuides = [
-    { id: 1, name: "Fahim Rahman" },
-    { id: 2, name: "Sabina Yasmin" },
-    { id: 3, name: "Touhidul Islam" },
-  ];
+  const [showModal, setShowModal] = useState(false);
 
-  const isLoggedIn = true; // Toggle this for testing
+  if (isLoading) return <div className="text-center py-20">Loading...</div>;
 
-  const handleBooking = () => {
-    if (!isLoggedIn) {
-      alert("Please login to book!");
-      return;
-    }
-    alert("Confirm your booking! (You’ll be redirected to My Bookings)");
-  };
+  const { tripTitle, tourType, description, price, images = [], tourPlan = [], guides = [] } = trip;
 
   return (
-    <div className="px-4 md:px-10 py-10 space-y-12">
-      {/* === Gallery Section === */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <img
-          src="https://source.unsplash.com/800x500/?desert"
-          className="col-span-2 row-span-2 object-cover w-full h-full rounded-lg"
-          alt="Main"
-        />
-        <img
-          src="https://source.unsplash.com/400x300/?beach"
-          className="object-cover w-full h-full rounded-lg"
-          alt=""
-        />
-        <img
-          src="https://source.unsplash.com/400x300/?city"
-          className="object-cover w-full h-full rounded-lg"
-          alt=""
-        />
-        <img
-          src="https://source.unsplash.com/400x300/?mountain"
-          className="object-cover w-full h-full rounded-lg"
-          alt=""
-        />
-        <img
-          src="https://source.unsplash.com/400x300/?temple"
-          className="object-cover w-full h-full rounded-lg"
-          alt=""
-        />
-      </section>
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <h2 className="text-4xl font-bold text-center mb-6">{tripTitle}</h2>
+      <p className="text-center text-lg text-gray-600 mb-2">{tourType}</p>
 
-      {/* === About Section === */}
-      <section>
-        <h2 className="text-2xl font-bold mb-4">About the Tour</h2>
-        <p>
-          Embark on a 3-day unforgettable journey through scenic landscapes, rich culture, and local
-          adventures. Perfect for nature lovers and explorers.
-        </p>
-      </section>
+      {/* Image Gallery */}
+      <div className="grid md:grid-cols-2 gap-4 mb-8">
+        {images.map((img, idx) => (
+          <img
+            key={idx}
+            src={img}
+            alt={`Trip ${idx + 1}`}
+            className="rounded-lg w-full h-64 object-cover shadow"
+          />
+        ))}
+      </div>
 
-      {/* === Tour Plan Section === */}
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Tour Plan</h2>
-        <div className="space-y-3">
+      {/* Description */}
+      <h3 className="text-2xl font-bold text-center">About the Tour</h3>
+      <p className="text-center mb-6">{description}</p>
+
+      {/* Tour Plan */}
+      <div className="mb-8">
+        <h3 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+          <FaCalendarAlt className="text-primary" /> Tour Plan
+        </h3>
+        <div className="space-y-4">
           {tourPlan.map((plan, index) => (
-            <div key={index} className="border rounded-lg overflow-hidden shadow-sm">
-              <div className=" px-4 py-3 font-semibold flex justify-between items-center">
-                <span>
-                  📍 {plan.day} – {plan.title}
-                </span>
-              </div>
-              <div className="px-4 py-3 text-sm">{plan.description}</div>
+            <div key={index} className="bg-base-200 p-4 rounded-lg shadow">
+              <h4 className="font-bold">
+                {plan.day}: {plan.title}
+              </h4>
+              <p className="text-sm text-gray-700 mt-1">{plan.description}</p>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* === Tour Guides List Section === */}
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Available Tour Guides</h2>
-        <div className="flex flex-wrap gap-4">
-          {tourGuides.map((guide) => (
-            <button
-              key={guide.id}
-              onClick={() => alert("Go to profile: " + guide.name)}
-              className="border rounded-lg px-4 py-2 hover:shadow transition"
-            >
+      {/* Guides */}
+      <div className="mb-8">
+        <h3 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+          <FaUserTie className="text-secondary" /> Tour Guides
+        </h3>
+        <ul className="list-disc list-inside space-y-1">
+          {guides.map((guide) => (
+            <li key={guide.id} className="text-gray-800">
               {guide.name}
-            </button>
+            </li>
           ))}
+        </ul>
+      </div>
+
+      {/* Price & Booking CTA */}
+      <div className="mt-10 flex items-center justify-between bg-base-200 p-6 rounded-xl shadow">
+        <div>
+          <p className="text-xl font-bold text-primary">Price: {price}TK</p>
         </div>
-      </section>
-
-      {/* === Booking Form === */}
-      <section className="border p-6 rounded-lg shadow-md max-w-2xl">
-        <h2 className="text-2xl font-bold mb-4">Book This Tour</h2>
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-          <input
-            type="text"
-            value="Explore the Hills of Bandarban"
-            readOnly
-            className="w-full border px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            value="John Doe"
-            readOnly
-            className="w-full border px-3 py-2 rounded"
-          />
-          <input
-            type="email"
-            value="john@example.com"
-            readOnly
-            className="w-full border px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            value="https://example.com/image.jpg"
-            readOnly
-            className="w-full border px-3 py-2 rounded"
-          />
-          <input type="text" value="$180" readOnly className="w-full border px-3 py-2 rounded" />
-
-          {/* === Date Picker === */}
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="w-full border px-3 py-2 rounded"
-          />
-
-          {/* === Tour Guide Dropdown === */}
-          <select className="w-full border px-3 py-2 rounded">
-            {tourGuides.map((guide) => (
-              <option key={guide.id}>{guide.name}</option>
-            ))}
-          </select>
-
-          {/* === Book Button === */}
-          <button
-            onClick={handleBooking}
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          >
-            Book Now
-          </button>
-        </form>
-      </section>
+        <button
+          className="btn btn-primary text-white px-6 py-2 rounded-lg"
+          onClick={() => {
+            setShowModal(!showModal);
+          }}
+        >
+          Book Now
+        </button>
+      </div>
+      {showModal && (
+        <BookingModal
+          packageData={trip}
+          guides={guides}
+          onClose={() => setShowModal(false)}
+          onSubmit={(bookingData) => {
+            console.log("Send to server:", bookingData);
+            setShowModal(false);
+            // Show "Confirm Your Booking" modal or toast
+          }}
+        />
+      )}
     </div>
   );
 };
