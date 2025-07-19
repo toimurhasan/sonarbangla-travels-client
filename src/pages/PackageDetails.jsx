@@ -1,12 +1,15 @@
 // import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { use, useState } from "react";
 import { FaUserTie, FaCalendarAlt } from "react-icons/fa";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import BookingModal from "../components/BookingModal";
+import { AuthContext } from "../contexts/AuthContext";
 
 const PackageDetails = () => {
   const { id } = useParams();
+  const { currentUser } = use(AuthContext);
+  const navigate = useNavigate();
 
   const { data: trip = {}, isLoading } = useQuery({
     queryKey: ["trip", id],
@@ -79,14 +82,25 @@ const PackageDetails = () => {
         <div>
           <p className="text-xl font-bold text-primary">Price: {price}TK</p>
         </div>
-        <button
-          className="btn btn-primary text-white px-6 py-2 rounded-lg"
-          onClick={() => {
-            setShowModal(!showModal);
-          }}
-        >
-          Book Now
-        </button>
+        {currentUser ? (
+          <button
+            className="btn btn-primary text-white px-6 py-2 rounded-lg"
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+          >
+            Book Now
+          </button>
+        ) : (
+          <button
+            className="btn btn-primary text-white px-6 py-2 rounded-lg"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Login to Book this Package
+          </button>
+        )}
       </div>
       {showModal && (
         <BookingModal

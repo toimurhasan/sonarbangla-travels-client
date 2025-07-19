@@ -22,7 +22,7 @@ const WhyTravelWithUs = () => {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Why Travel With Us?</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {features.map((item, i) => (
-          <div key={i} className="p-6 border rounded-lg shadow">
+          <div key={i} className="p-6 text-center border border-base-300 rounded-sm shadow">
             <div className="text-4xl mb-4">{item.icon}</div>
             <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
             <p>{item.desc}</p>

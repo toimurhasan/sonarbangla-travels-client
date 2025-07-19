@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+// import { useLocation } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
 const TourismTabs = () => {
   const [packages, setPackages] = useState([]);
+  // const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/random-packages") 
+    fetch("http://localhost:3000/random-packages")
       .then((res) => res.json())
       .then((data) => setPackages(data))
       .catch((err) => console.error("Failed to load packages:", err));
@@ -47,9 +51,11 @@ const TourismTabs = () => {
                   <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}TK</p>
                   <button
                     className="btn-primary btn px-4 py-2 rounded transition"
-                    onClick={() => (window.location.href = `/package/${pkg._id}`)}
+                    onClick={() => {
+                      navigate(`/package/${pkg._id}`);
+                    }}
                   >
-                    View Package
+                    View Details
                   </button>
                 </div>
               </div>
