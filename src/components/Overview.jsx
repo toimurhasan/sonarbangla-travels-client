@@ -14,12 +14,11 @@ const Overview = () => {
         </div>
 
         {/* Video Content */}
-        <div className="aspect-w-16 aspect-h-9">
+        <div className="aspect-video">
           <iframe
             className="w-full h-full rounded-xl shadow-lg"
-            src="https://www.youtube.com/embed/BQnKwFJ5T6M"
+            src="https://www.youtube.com/embed/H2vxezzEcww?autoplay=0&mute=1&loop=1&controls=0&playlist=H2vxezzEcww"
             title="Explore Bangladesh"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signInUser, continueWithGoogle } = use(AuthContext);
@@ -22,7 +23,13 @@ const Login = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        toast.error(errorCode);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: errorCode,
+          confirmButtonText: "Try again",
+        });
       });
   };
   // const {  } = use(AuthContext);
@@ -39,7 +46,12 @@ const Login = () => {
         // Handle Errors here.
         const errorCode = error.code;
 
-        console.log(errorCode);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: errorCode,
+          confirmButtonText: "Try again",
+        });
       });
   };
   return (
@@ -64,12 +76,14 @@ const Login = () => {
               className="input w-full"
               placeholder="Password"
             />
-            <Link to={"/register"} className="link  text-blue-700">
-              Register Now
-            </Link>
-            <Link to={"/forget-password"} className="link  text-blue-700">
-              Forget Password?
-            </Link>
+            <div className="flex justify-between">
+              <Link to={"/register"} className="link  text-blue-700">
+                Register Now
+              </Link>
+              <Link to={"/forget-password"} className="link  text-blue-700">
+                Forget Password?
+              </Link>
+            </div>
 
             <button type="submit" className="btn bg-gray-600 hover:bg-gray-500 text-white mt-4">
               Login
