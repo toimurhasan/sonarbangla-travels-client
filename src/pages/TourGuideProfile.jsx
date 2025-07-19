@@ -11,7 +11,7 @@ const TourGuideProfile = () => {
   // };
 
   const data = useLoaderData();
-  const { name, email, photo, bio, location } = data;
+  const { name, email, photo, bio, expertise, location } = data;
 
   // Example stories by the guide
   const stories = [
@@ -40,6 +40,7 @@ const TourGuideProfile = () => {
           <h3 className="text-2xl font-semibold">{name}</h3>
           <p className="text-sm text-gray-600 italic">{location}</p>
           <p>{bio}</p>
+          <p className="text-sm text-gray-500">Expertise: {expertise}</p>
           <p className="text-sm text-gray-500">Contact: {email}</p>
         </div>
       </div>

@@ -89,10 +89,7 @@ const TouristStorySection = () => {
       </div>
 
       <div className="text-center">
-        <button
-          onClick={() => navigate("/community")}
-          className="bg-emerald-600  px-6 py-2 rounded hover:bg-emerald-700 transition text-lg"
-        >
+        <button onClick={() => navigate("/community")} className="btn btn-primary">
           All Stories
         </button>
       </div>
