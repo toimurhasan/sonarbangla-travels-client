@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       { path: "forget-password", element: <ForgetPassword></ForgetPassword> },
       // Package Details & Tour Guide Profile
       { path: "/package/:id", element: <PackageDetails></PackageDetails> },
-      { path: "/tour-guide/:guideId", element: <TourGuideProfile></TourGuideProfile> },
+      { path: "/tour-guide/:id", element: <TourGuideProfile></TourGuideProfile> },
     ],
   },
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 // import { useLocation } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -14,6 +14,14 @@ const TourismTabs = () => {
       .then((res) => res.json())
       .then((data) => setPackages(data))
       .catch((err) => console.error("Failed to load packages:", err));
+  }, []);
+
+  const [guides, setGuides] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/guides/random")
+      .then((res) => res.json())
+      .then((data) => setGuides(data));
   }, []);
 
   return (
@@ -65,20 +73,26 @@ const TourismTabs = () => {
 
         {/* Tour Guides */}
         <TabPanel>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div key={item} className=" border rounded-lg shadow-md overflow-hidden">
-                <img
-                  src={`https://source.unsplash.com/400x250/?portrait,person,${item}`}
-                  alt="Tour Guide"
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold mb-1">Guide Name {item}</h3>
-                  <p className="text-sm mb-3">Specialist in eco-cultural tours</p>
-                  <button className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">
-                    View Details
-                  </button>
+          <h2 className="text-3xl font-bold text-center mb-6">Meet Our Tour Guides</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {guides.map((guide) => (
+              <div key={guide._id} className="card bg-base-100 shadow-xl">
+                <figure>
+                  <img
+                    src={guide.photo}
+                    alt={guide.name}
+                    className=" h-56 rounded-full object-cover"
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{guide.name}</h2>
+                  <p>Expertise: {guide.expertise}</p>
+                  <p>Email: {guide.email}</p>
+                  <div className="card-actions mt-4 justify-center">
+                    <Link to={`/tour-guide/${guide._id}`} className="btn btn-outline btn-primary">
+                      View Details
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

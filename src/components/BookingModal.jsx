@@ -2,6 +2,7 @@ import { use, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 // import { useAuth } from "../hooks/useAuth"; // customize this hook based on your auth context
 
 const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
@@ -9,7 +10,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
   const { currentUser } = use(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedGuide, setSelectedGuide] = useState(guides?.[0]?.name || "");
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  // const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +40,20 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
         // Close the booking modal
         onClose();
         // Open the confirmation modal
-        setIsConfirmOpen(true);
+        // setIsConfirmOpen(true);
+        Swal.fire({
+          title: "Booking Placed Successfully.",
+          showConfirmButton: false,
+          icon: "success",
+          html: `
+       <b>Your submission is pending review.</b>
+       <br>
+          <br>
+    Click here to go to
+    <a href="/my-bookings" style="color:blue; text-decoration: underline">My Bookings</a>,
+
+  `,
+        });
       } else {
         console.error("Booking failed");
       }
@@ -148,7 +162,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
           </div>
         </form>
       </div>
-      {isConfirmOpen && (
+      {/* {isConfirmOpen && (
         <dialog id="confirm_modal" className="modal modal-open">
           <div className="modal-box text-center">
             <h2 className="text-xl font-semibold text-green-600 mb-4">Confirm your Booking</h2>
@@ -158,7 +172,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
             </a>
           </div>
         </dialog>
-      )}
+      )} */}
     </dialog>
   );
 };
