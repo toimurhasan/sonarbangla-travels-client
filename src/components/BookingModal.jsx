@@ -9,9 +9,11 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
   const { currentUser } = use(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedGuide, setSelectedGuide] = useState(guides?.[0]?.name || "");
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const booking = {
       packageName: packageData.tripTitle,
       touristName: currentUser.name,
@@ -22,7 +24,28 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
       guide: selectedGuide,
       status: "pending",
     };
-    onSubmit(booking);
+
+    try {
+      const res = await fetch("http://localhost:3000/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // optional
+        },
+        body: JSON.stringify(booking),
+      });
+
+      if (res.ok) {
+        // Close the booking modal
+        onClose();
+        // Open the confirmation modal
+        setIsConfirmOpen(true);
+      } else {
+        console.error("Booking failed");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   return (
@@ -125,6 +148,17 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
           </div>
         </form>
       </div>
+      {isConfirmOpen && (
+        <dialog id="confirm_modal" className="modal modal-open">
+          <div className="modal-box text-center">
+            <h2 className="text-xl font-semibold text-green-600 mb-4">Confirm your Booking</h2>
+            <p className="mb-6">Your booking has been placed successfully.</p>
+            <a href="/my-bookings" className="btn bg-blue-600 text-white hover:bg-blue-700">
+              Go to My Bookings
+            </a>
+          </div>
+        </dialog>
+      )}
     </dialog>
   );
 };
