@@ -11,18 +11,18 @@ const slides = [
     title: "Explore Bangladesh",
     subtitle: "From the hills of Bandarban to the beaches of Cox's Bazar",
   },
-  // {
-  //   id: 2,
-  //   image: "https://source.unsplash.com/1600x600/?nature,bangladesh",
-  //   title: "Adventure Awaits",
-  //   subtitle: "Experience culture, nature, and unforgettable memories",
-  // },
-  // {
-  //   id: 3,
-  //   image: "https://source.unsplash.com/1600x600/?sundarbans,rivers",
-  //   title: "Discover Hidden Gems",
-  //   subtitle: "Cruise through the rivers and explore the Sundarbans",
-  // },
+  {
+    id: 2,
+    image: "https://i.ibb.co/fdmxkP4s/two.webp",
+    title: "Adventure Awaits",
+    subtitle: "Experience culture, nature, and unforgettable memories",
+  },
+  {
+    id: 3,
+    image: "https://i.ibb.co/ZpK2QpYq/three.jpg",
+    title: "Discover Hidden Gems",
+    subtitle: "Cruise through the rivers and explore the Sundarbans",
+  },
 ];
 
 const BannerSwiper = () => {

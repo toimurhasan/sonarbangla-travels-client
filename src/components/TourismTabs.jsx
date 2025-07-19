@@ -1,13 +1,22 @@
+import { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
 const TourismTabs = () => {
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/random-packages") // 🔁 Replace with your backend URL if different
+      .then((res) => res.json())
+      .then((data) => setPackages(data))
+      .catch((err) => console.error("Failed to load packages:", err));
+  }, []);
+
   return (
-    <section className="py-12px-4 md:px-8 lg:px-16">
+    <section className="py-12 px-4 md:px-8 lg:px-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Tourism & Travel Guide</h2>
 
       <Tabs>
-        {/* Tab headers */}
         <TabList className="flex gap-6 justify-center border-b-2 pb-2 mb-6 text-lg font-medium">
           <Tab
             className="cursor-pointer px-4 py-2 border-b-2 border-transparent hover:text-blue-600 focus:outline-none"
@@ -23,21 +32,20 @@ const TourismTabs = () => {
           </Tab>
         </TabList>
 
-        {/* Our Packages Tab */}
+        {/* Our Packages */}
         <TabPanel>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="border rounded-lg shadow-md overflow-hidden">
-                <img
-                  src={`https://source.unsplash.com/400x250/?travel,landscape,${item}`}
-                  alt="Package"
-                  className="w-full h-48 object-cover"
-                />
+            {packages.map((pkg, index) => (
+              <div key={index} className="border rounded-lg shadow-md overflow-hidden">
+                <img src={pkg.image} alt={pkg.tripTitle} className="w-full h-48 object-cover" />
                 <div className="p-4">
-                  <p className="text-sm ">Adventure</p>
-                  <h3 className="text-xl font-semibold mb-2">Trip to Destination {item}</h3>
-                  <p className="text-green-600 font-bold text-lg mb-4">$199</p>
-                  <button className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition">
+                  <p className="text-sm text-gray-500">{pkg.tourType}</p>
+                  <h3 className="text-xl font-semibold mb-2">{pkg.tripTitle}</h3>
+                  <p className="text-green-600 font-bold text-lg mb-4">${pkg.price}</p>
+                  <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                    onClick={() => (window.location.href = `/packages/${pkg._id}`)}
+                  >
                     View Package
                   </button>
                 </div>
@@ -46,7 +54,7 @@ const TourismTabs = () => {
           </div>
         </TabPanel>
 
-        {/* Tour Guides Tab */}
+        {/* Tour Guides */}
         <TabPanel>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((item) => (
