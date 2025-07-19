@@ -17,16 +17,16 @@ const TourismTabs = () => {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Tourism & Travel Guide</h2>
 
       <Tabs>
-        <TabList className="flex gap-6 justify-center border-b-2 pb-2 mb-6 text-lg font-medium">
+        <TabList className="flex gap-6 justify-center pb-2  mb-6 text-lg font-medium">
           <Tab
-            className="cursor-pointer px-4 py-2 border-b-2 border-transparent hover:text-blue-600 focus:outline-none"
-            selectedClassName="!border-blue-600 text-blue-600"
+            className="cursor-pointer px-4 py-2 border-b-2 border-transparent hover:text-primary focus:outline-none"
+            selectedClassName="!border-primary text-primary"
           >
             Our Packages
           </Tab>
           <Tab
-            className="cursor-pointer px-4 py-2 border-b-2 border-transparent hover:text-blue-600 focus:outline-none"
-            selectedClassName="!border-blue-600 text-blue-600"
+            className="cursor-pointer px-4 py-2 border-b-2 border-transparent hover:text-primary focus:outline-none"
+            selectedClassName="!border-primary text-primary"
           >
             Meet Our Tour Guides
           </Tab>
@@ -36,14 +36,17 @@ const TourismTabs = () => {
         <TabPanel>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {packages.map((pkg, index) => (
-              <div key={index} className="border rounded-lg shadow-md overflow-hidden">
+              <div
+                key={index}
+                className="border border-base-300 rounded-lg shadow-md overflow-hidden"
+              >
                 <img src={pkg.image} alt={pkg.tripTitle} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <p className="text-sm text-gray-500">{pkg.tourType}</p>
                   <h3 className="text-xl font-semibold mb-2">{pkg.tripTitle}</h3>
                   <p className="text-green-600 font-bold text-lg mb-4">${pkg.price}</p>
                   <button
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                    className="btn-primary btn px-4 py-2 rounded transition"
                     onClick={() => (window.location.href = `/packages/${pkg._id}`)}
                   >
                     View Package

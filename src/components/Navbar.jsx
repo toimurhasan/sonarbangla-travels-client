@@ -1,6 +1,8 @@
 import React, { use } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+// import ThemeToggleButton from "./ThemeToggleButton";
+import ThemeSelector from "./ThemeSelector";
 
 const Navbar = () => {
   const { currentUser, signOutUser } = use(AuthContext);
@@ -66,7 +68,7 @@ const Navbar = () => {
           <Link to="/">
             <h1 className="cursor-pointer text-xl flex  gap-2">
               <img src="/nav-logo.png" alt="logo" className="object-contain" />
-              <span className="font-semi">SBT</span>
+              <span className="font-semibold">SonarBangla Travels</span>
             </h1>
           </Link>
         </div>
@@ -103,6 +105,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="navbar-end gap-2">
+            <ThemeSelector></ThemeSelector>
             <Link to={"/register"} className="btn">
               Register
             </Link>
