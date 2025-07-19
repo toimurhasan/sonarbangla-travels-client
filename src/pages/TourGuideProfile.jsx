@@ -1,12 +1,17 @@
+import React from "react";
+import { useLoaderData } from "react-router";
 const TourGuideProfile = () => {
   // Example guide info (replace with API data later)
-  const guide = {
-    name: "Arafat Hossain",
-    photo: "https://source.unsplash.com/200x200/?portrait,man",
-    bio: "I'm a certified local guide with 5+ years of experience showing travelers the beauty of Bangladesh. I specialize in offbeat locations and authentic cultural experiences.",
-    location: "Sylhet, Bangladesh",
-    contact: "arafat@example.com",
-  };
+  // const guide = {
+  //   name: "Arafat Hossain",
+  //   photo: "https://source.unsplash.com/200x200/?portrait,man",
+  //   bio: "I'm a certified local guide with 5+ years of experience showing travelers the beauty of Bangladesh. I specialize in offbeat locations and authentic cultural experiences.",
+  //   location: "Sylhet, Bangladesh",
+  //   contact: "arafat@example.com",
+  // };
+
+  const data = useLoaderData();
+  const { name, email, photo, bio, location } = data;
 
   // Example stories by the guide
   const stories = [
@@ -30,22 +35,18 @@ const TourGuideProfile = () => {
 
       {/* Guide Info */}
       <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
-        <img
-          src={guide.photo}
-          alt={guide.name}
-          className="w-36 h-36 rounded-full object-cover border"
-        />
+        <img src={photo} alt={name} className="w-36 h-36 rounded-full object-cover border" />
         <div className="text-center md:text-left space-y-2">
-          <h3 className="text-2xl font-semibold">{guide.name}</h3>
-          <p className="text-sm text-gray-600 italic">{guide.location}</p>
-          <p>{guide.bio}</p>
-          <p className="text-sm text-gray-500">Contact: {guide.contact}</p>
+          <h3 className="text-2xl font-semibold">{name}</h3>
+          <p className="text-sm text-gray-600 italic">{location}</p>
+          <p>{bio}</p>
+          <p className="text-sm text-gray-500">Contact: {email}</p>
         </div>
       </div>
 
       {/* Stories Section */}
       <div>
-        <h3 className="text-2xl font-semibold mb-6">Stories by {guide.name}</h3>
+        <h3 className="text-2xl font-semibold mb-6">Stories by {name}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {stories.map((story) => (
             <div

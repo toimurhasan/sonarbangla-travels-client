@@ -40,7 +40,13 @@ const router = createBrowserRouter([
       { path: "forget-password", element: <ForgetPassword></ForgetPassword> },
       // Package Details & Tour Guide Profile
       { path: "/package/:id", element: <PackageDetails></PackageDetails> },
-      { path: "/tour-guide/:id", element: <TourGuideProfile></TourGuideProfile> },
+      {
+        path: "/tour-guide/:id",
+        loader: ({ params }) => {
+          return fetch(`http://localhost:3000/api/guides/${params.id}`);
+        },
+        element: <TourGuideProfile></TourGuideProfile>,
+      },
     ],
   },
 
