@@ -2,6 +2,7 @@ import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { saveUserInDB } from "../components/api/utils";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,6 +30,11 @@ const Register = () => {
       .then(() => {
         updateUserInfo(name, photo)
           .then(() => {
+            saveUserInDB({
+              name,
+              email,
+              image: photo,
+            });
             toast.success("Register Successful");
             navigate(location?.state || "/");
           })

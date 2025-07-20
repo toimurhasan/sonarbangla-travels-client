@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { saveUserInDB } from "../components/api/utils";
 
 const Login = () => {
   const { signInUser, continueWithGoogle } = use(AuthContext);
@@ -17,7 +18,14 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     signInUser(email, password)
-      .then(() => {
+      .then((result) => {
+        // console.log(result);
+        // update user
+        saveUserInDB({
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL,
+        });
         toast.success("Login Successful.");
         navigate(location?.state || "/");
       })
@@ -40,6 +48,11 @@ const Login = () => {
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         // console.log(user);
+        saveUserInDB({
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL,
+        });
         navigate(location?.state || "/");
       })
       .catch((error) => {
