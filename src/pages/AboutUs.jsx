@@ -4,20 +4,20 @@ const AboutUs = () => {
     bio: `I'm a passionate full-stack web developer who loves solving real-world problems 
     through clean and efficient code. I enjoy teaching, building products, and helping 
     others grow in tech.`,
-    projectsCount: 12,
+    projectsCount: 5,
     profileImage: "https://avatars.githubusercontent.com/u/87655746?v=4", // Optional
     links: [
       {
         title: "GitHub",
-        url: "https://github.com/yourusername",
+        url: "https://github.com/toimurhasan",
       },
       {
         title: "Portfolio Website",
-        url: "https://yourportfolio.com",
+        url: "https://toimur-hasan.web.app",
       },
       {
-        title: "LinkedIn",
-        url: "https://linkedin.com/in/yourusername",
+        title: "Facebook",
+        url: "https://web.facebook.com/web.developer.tamim",
       },
     ],
   };
@@ -37,7 +37,7 @@ const AboutUs = () => {
         {/* Bio and Info */}
         <div className="space-y-3 text-center md:text-left">
           <h3 className="text-2xl font-semibold">{developer.name}</h3>
-          <p className="text-gray-600 whitespace-pre-line">{developer.bio}</p>
+          <p className="">{developer.bio}</p>
           <p className="font-medium">Projects Built: {developer.projectsCount}</p>
 
           {/* Links */}

@@ -24,6 +24,7 @@ import AddPackage from "../dashboard/AddPackage";
 import ManageUsers from "../dashboard/ManageUsers";
 import ManageCandidates from "../dashboard/ManageCandidates";
 import ForgetPassword from "../pages/ForgetPassword";
+import Story from "../pages/Story";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -47,14 +48,19 @@ const router = createBrowserRouter([
         },
         element: <TourGuideProfile></TourGuideProfile>,
       },
+      // Stories
+      {
+        path: "/story/:id",
+        loader: ({ params }) => {
+          return fetch(`http://localhost:3000/api/story/${params.id}`);
+        },
+        element: <Story></Story>,
+      },
+      { path: "/stories/add", element: <div>Add Story Page</div> },
+      { path: "/stories/manage", element: <div>Manage Stories Page</div> },
+      { path: "/stories/edit/:storyId", element: <div>Edit Story Page</div> },
     ],
   },
-
-  // Stories
-  { path: "/stories", element: <div>All Stories Page</div> },
-  { path: "/stories/add", element: <div>Add Story Page</div> },
-  { path: "/stories/manage", element: <div>Manage Stories Page</div> },
-  { path: "/stories/edit/:storyId", element: <div>Edit Story Page</div> },
 
   // Booking & Payment
   { path: "/payment/:bookingId", element: <div>Payment Page</div> },

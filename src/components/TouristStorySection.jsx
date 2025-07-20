@@ -81,7 +81,7 @@ const TouristStorySection = () => {
               <div className="mt-4">
                 {currentUser ? (
                   <FacebookShareButton
-                    url={`https://your-site.com/story/${story._id}`}
+                    url={`https://sonarbangla-travels.web.app/story/${story._id}`}
                     quote={story.title}
                   >
                     <FacebookIcon size={32} round />
