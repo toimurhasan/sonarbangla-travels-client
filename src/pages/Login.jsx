@@ -1,7 +1,7 @@
 import React, { use } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { saveUserInDB } from "../components/api/utils";
@@ -26,7 +26,13 @@ const Login = () => {
           email: result.user.email,
           image: result.user.photoURL,
         });
-        toast.success("Login Successful.");
+        // toast.success("Login Successful.");
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate(location?.state || "/");
       })
       .catch((error) => {

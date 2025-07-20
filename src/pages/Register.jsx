@@ -1,8 +1,9 @@
 import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { saveUserInDB } from "../components/api/utils";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -35,17 +36,35 @@ const Register = () => {
               email,
               image: photo,
             });
-            toast.success("Register Successful");
+            // toast.success("Register Successful");
+            Swal.fire({
+              icon: "success",
+              title: "Register Successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             navigate(location?.state || "/");
           })
           .catch((error) => {
             const errorCode = error.code;
-            toast.error(errorCode);
+            // toast.error(errorCode);
+            Swal.fire({
+              icon: "error",
+              title: errorCode,
+              showConfirmButton: false,
+              timer: 1500,
+            });
           });
       })
       .catch((error) => {
         const errorCode = error.code;
-        toast.error(errorCode);
+        // toast.error(errorCode);
+        Swal.fire({
+          icon: "error",
+          title: errorCode,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
   return (

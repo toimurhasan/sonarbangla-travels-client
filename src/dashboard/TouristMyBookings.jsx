@@ -1,31 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
 
 const TouristMyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
 
+  const { currentUser } = use(AuthContext);
   useEffect(() => {
     // TODO: Fetch bookings from API here
+    fetch(`http://localhost:3000/api/bookings?email=${currentUser.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Filtered bookings: ", data);
+        setBookings(data);
+      });
     // Example static data for now:
-    setBookings([
-      {
-        id: 1,
-        packageName: "Beach Adventure",
-        tourGuideName: "John Doe",
-        tourDate: "2025-08-01",
-        price: 250,
-        status: "Pending",
-      },
-      {
-        id: 2,
-        packageName: "Mountain Hike",
-        tourGuideName: "Jane Smith",
-        tourDate: "2025-09-15",
-        price: 350,
-        status: "Accepted",
-      },
-    ]);
   }, []);
 
   const handlePay = (bookingId) => {
@@ -33,11 +23,27 @@ const TouristMyBookings = () => {
     navigate(`/dashboard/tourist/payment/${bookingId}`);
   };
 
-  const handleCancel = (bookingId) => {
-    // TODO: Implement cancel booking logic
-    setBookings((prev) =>
-      prev.map((b) => (b.id === bookingId ? { ...b, status: "Cancelled" } : b))
-    );
+  const handleCancel = async (bookingId) => {
+    // console.log(bookingId);
+    try {
+      const res = await fetch(`http://localhost:3000/api/bookings/${bookingId}/cancel`, {
+        method: "PATCH",
+      });
+
+      if (res.ok) {
+        // Update UI immediately
+        setBookings((prev) =>
+          prev.map((b) => (b._id === bookingId ? { ...b, status: "cancelled" } : b))
+        );
+      } else {
+        const errorData = await res.json();
+        console.error("Cancel failed:", errorData.error);
+        alert("Failed to cancel booking: " + errorData.error);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Network error while canceling booking.");
+    }
   };
 
   return (
@@ -65,24 +71,26 @@ const TouristMyBookings = () => {
             bookings.map((booking) => (
               <tr key={booking.id}>
                 <td className="border p-2">{booking.packageName}</td>
-                <td className="border p-2">{booking.tourGuideName}</td>
-                <td className="border p-2">{booking.tourDate}</td>
+                <td className="border p-2">{booking.guide}</td>
+                <td className="border p-2">{new Date(booking.tourDate).toLocaleDateString()}</td>
                 <td className="border p-2">${booking.price}</td>
-                <td className="border p-2">{booking.status}</td>
+                <td className="border p-2">
+                  {booking.status === "pending"
+                    ? "In Review"
+                    : booking.status === "cancelled"
+                    ? "Cancelled"
+                    : "Accepted"}
+                </td>
                 <td className="border p-2 space-x-2">
-                  {booking.status === "Pending" && (
+                  {booking.status === "pending" && (
                     <>
-                      <button
-                        onClick={() => handlePay(booking.id)}
-                        type="button"
-                        className="px-3 py-1 border rounded"
-                      >
+                      <button onClick={() => handlePay(booking.id)} type="button" className="btn">
                         Pay
                       </button>
                       <button
-                        onClick={() => handleCancel(booking.id)}
+                        onClick={() => handleCancel(booking._id)}
                         type="button"
-                        className="px-3 py-1 border rounded"
+                        className="btn"
                       >
                         Cancel
                       </button>

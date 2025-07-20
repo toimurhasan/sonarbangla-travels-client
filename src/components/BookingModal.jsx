@@ -37,28 +37,35 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
       });
 
       if (res.ok) {
-        // Close the booking modal
         onClose();
-        // Open the confirmation modal
-        // setIsConfirmOpen(true);
         Swal.fire({
           title: "Booking Placed Successfully.",
           showConfirmButton: false,
           icon: "success",
           html: `
-       <b>Your submission is pending review.</b>
-       <br>
-          <br>
-    Click here to go to
-    <a href="/my-bookings" style="color:blue; text-decoration: underline">My Bookings</a>,
-
-  `,
+        <b>Your submission is waiting for payment completion.</b>
+        <br><br>
+        Go to
+        <a href="/dashboard/tourist/my-bookings" style="color:blue; text-decoration: underline">
+          My Bookings
+        </a> to confirm your booking.
+      `,
         });
       } else {
-        console.error("Booking failed");
+        const errorData = await res.json(); // 👈 parse the error message
+        Swal.fire({
+          icon: "error",
+          title: "Booking Failed",
+          text: errorData.error || "Something went wrong. Please try again.",
+        });
       }
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Booking request failed:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Unable to connect to server. Please try again later.",
+      });
     }
   };
 

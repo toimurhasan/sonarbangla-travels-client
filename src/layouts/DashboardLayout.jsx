@@ -2,8 +2,18 @@
 
 import { Outlet } from "react-router";
 import SidebarNav from "../components/SidebarNav";
+import { use, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const DashboardLayout = () => {
+  const { currentUser } = use(AuthContext);
+  const [role, setRole] = useState();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/user-role?email=${currentUser.email}`)
+      .then((res) => res.json())
+      .then((data) => setRole(data.role));
+  }, []);
   return (
     // <div className="min-h-screen flex">
     //   {/* Sidebar */}
@@ -58,10 +68,10 @@ const DashboardLayout = () => {
         <div className="flex">
           {/* Sidebar */}
           <aside className="w-64 bg-gray-800 text-white min-h-screen p-4 hidden sm:block">
-            <div className="text-2xl font-bold mb-6">Dashboard</div>
+            <div className="text-2xl font-bold mb-6">S.B.T. Dashboard</div>
             {/* Add navigation links here based on role (optional) */}
             {/* Example: <Link to="/dashboard/tourist/my-bookings">My Bookings</Link> */}
-            <SidebarNav userRole={"admin"} />
+            <SidebarNav userRole={role} />
           </aside>
           <div className="flex-1">
             <Outlet />
