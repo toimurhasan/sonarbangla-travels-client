@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 // import ThemeToggleButton from "./ThemeToggleButton";
@@ -15,6 +15,15 @@ const Navbar = () => {
         // An error happened.
       });
   };
+
+  const [role, setRole] = useState();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/user-role?email=${currentUser.email}`)
+      .then((res) => res.json())
+      .then((data) => setRole(data.role));
+  }, []);
+
   const links = (
     <>
       <li>
@@ -96,7 +105,7 @@ const Navbar = () => {
                 </div>
                 <div className="divider mt-2 mb-0"></div>
                 <li>
-                  <Link to={"/"}>Dashboard</Link>
+                  <Link to={`/dashboard/${role}`}>Dashboard</Link>
                 </li>
                 <li>
                   <button onClick={clickHandler}>Logout</button>
