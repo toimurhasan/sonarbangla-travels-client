@@ -1,45 +1,57 @@
 import { FacebookShareButton, FacebookIcon } from "react-share";
 import { useNavigate } from "react-router";
+import { use, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const TouristStorySection = () => {
   const navigate = useNavigate();
 
   // Change this based on your real auth logic
-  const isLoggedIn = false;
+  // const isLoggedIn = false;
 
-  const stories = [
-    {
-      id: 1,
-      title: "A Magical Trip to Sajek",
-      author: "Tania Akter",
-      image: "https://source.unsplash.com/400x250/?sajek,valley,1",
-      text: "It was a dreamy experience! The fog, hills, and tribal hospitality made it unforgettable.",
-    },
-    {
-      id: 2,
-      title: "Exploring the Roots in Srimangal",
-      author: "Rafiul Hasan",
-      image: "https://source.unsplash.com/400x250/?tea,garden,bangladesh",
-      text: "Srimangal's tea gardens and rainy weather brought peace to my soul.",
-    },
-    {
-      id: 3,
-      title: "Mystery of the Sundarbans",
-      author: "Asif Chowdhury",
-      image: "https://source.unsplash.com/400x250/?sundarbans,forest",
-      text: "Creepy yet exciting tour through the mangrove jungle—highly recommended!",
-    },
-    {
-      id: 4,
-      title: "The Calm of Kuakata",
-      author: "Nusrat Jahan",
-      image: "https://source.unsplash.com/400x250/?kuakata,sea",
-      text: "Watching both sunrise and sunset from the same beach was surreal.",
-    },
-  ];
+  const { currentUser } = use(AuthContext);
+
+  // const stories = [
+  //   {
+  //     id: 1,
+  //     title: "A Magical Trip to Sajek",
+  //     author: "Tania Akter",
+  //     image: "https://source.unsplash.com/400x250/?sajek,valley,1",
+  //     text: "It was a dreamy experience! The fog, hills, and tribal hospitality made it unforgettable.",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Exploring the Roots in Srimangal",
+  //     author: "Rafiul Hasan",
+  //     image: "https://source.unsplash.com/400x250/?tea,garden,bangladesh",
+  //     text: "Srimangal's tea gardens and rainy weather brought peace to my soul.",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Mystery of the Sundarbans",
+  //     author: "Asif Chowdhury",
+  //     image: "https://source.unsplash.com/400x250/?sundarbans,forest",
+  //     text: "Creepy yet exciting tour through the mangrove jungle—highly recommended!",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "The Calm of Kuakata",
+  //     author: "Nusrat Jahan",
+  //     image: "https://source.unsplash.com/400x250/?kuakata,sea",
+  //     text: "Watching both sunrise and sunset from the same beach was surreal.",
+  //   },
+  // ];
+
+  const [stories, setStories] = useState();
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/stories/random")
+      .then((res) => res.json())
+      .then((data) => setStories(data));
+  }, []);
 
   const handleShare = (url) => {
-    if (!isLoggedIn) {
+    if (!currentUser) {
       navigate("/login");
     }
   };
@@ -49,27 +61,27 @@ const TouristStorySection = () => {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Tourist Stories</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {stories.map((story) => (
+        {stories?.map((story) => (
           <div
-            key={story.id}
+            key={story._id}
             className=" shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row"
           >
             <img
-              src={story.image}
+              src={story.images[0]}
               alt={story.title}
               className="w-full md:w-1/3 h-48 object-cover"
             />
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
                 <h3 className="text-xl font-semibold">{story.title}</h3>
-                <p className="text-sm mb-2">by {story.author}</p>
-                <p className=" text-sm">{story.text}</p>
+                <p className="text-sm mb-2">by {story.userName}</p>
+                <p className=" text-sm">{story.description}</p>
               </div>
 
               <div className="mt-4">
-                {isLoggedIn ? (
+                {currentUser ? (
                   <FacebookShareButton
-                    url={`https://your-site.com/story/${story.id}`}
+                    url={`https://your-site.com/story/${story._id}`}
                     quote={story.title}
                   >
                     <FacebookIcon size={32} round />
@@ -77,7 +89,7 @@ const TouristStorySection = () => {
                 ) : (
                   <button
                     onClick={() => handleShare()}
-                    className="bg-blue-600  px-3 py-1 rounded hover:bg-blue-700 transition text-sm"
+                    className="btn-secondary rounded-sm btn-sm btn"
                   >
                     Login to Share
                   </button>
