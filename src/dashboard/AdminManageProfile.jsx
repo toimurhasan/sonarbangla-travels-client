@@ -29,7 +29,7 @@ const AdminManageProfile = () => {
       </div>
 
       {/* Admin Info */}
-      <div className="bg-white shadow-md p-4 rounded-md w-full md:w-2/3">
+      <div className=" shadow-md p-4 rounded-md w-full md:w-2/3">
         <div className="flex items-center gap-4">
           <img src={photoURL} alt="Admin" className="w-24 h-24 rounded-full" />
           <div>
@@ -38,7 +38,7 @@ const AdminManageProfile = () => {
             <p>Role: Admin</p>
             <button
               onClick={() => setShowModal(true)}
-              className="mt-2 px-4 py-1 bg-blue-600 text-white rounded cursor-pointer"
+              className="mt-2 px-4 py-1 bg-blue-600  rounded cursor-pointer"
             >
               Edit Profile
             </button>
@@ -54,7 +54,7 @@ const AdminManageProfile = () => {
 };
 
 const StatCard = ({ title, value }) => (
-  <div className="bg-blue-100 text-blue-800 p-4 rounded shadow text-center">
+  <div className="border text-blue-800 p-4 rounded shadow text-center">
     <p className="text-xl font-semibold">{value}</p>
     <p className="text-sm">{title}</p>
   </div>

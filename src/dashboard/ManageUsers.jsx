@@ -1,35 +1,38 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Select from "react-select";
-
-// Sample user data (you'll replace this with data from backend)
-const sampleUsers = [
-  { name: "Alice", email: "alice@example.com", role: "tourist" },
-  { name: "Bob", email: "bob@example.com", role: "tour-guide" },
-  { name: "Charlie", email: "charlie@example.com", role: "admin" },
-  { name: "David", email: "david@example.com", role: "tourist" },
-];
 
 const roleOptions = [
   { value: "", label: "All Roles" },
   { value: "tourist", label: "Tourist" },
-  { value: "tour-guide", label: "Tour Guide" },
+  { value: "tourGuide", label: "Tour Guide" },
   { value: "admin", label: "Admin" },
 ];
 
 const ManageUsers = () => {
-  const [users] = useState(sampleUsers);
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState(roleOptions[0]);
 
-  const filteredUsers = useMemo(() => {
-    return users.filter((user) => {
-      const matchRole = selectedRole.value ? user.role === selectedRole.value : true;
-      const matchSearch =
-        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchRole && matchSearch;
-    });
-  }, [searchTerm, selectedRole, users]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const query = new URLSearchParams({
+          search: searchTerm,
+          role: selectedRole.value,
+        }).toString();
+
+        const res = await fetch(`http://localhost:3000/api/users?${query}`);
+        const data = await res.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [searchTerm, selectedRole]);
+
+  const filteredUsers = useMemo(() => users, [users]);
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-6">
