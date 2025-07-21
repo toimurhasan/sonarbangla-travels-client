@@ -85,6 +85,7 @@ const router = createBrowserRouter([
       { path: "manage-stories", element: <TouristManageStories /> },
 
       // Admin
+      { path: "admin", element: <AdminManageProfile /> },
       { path: "admin/manage-profile", element: <AdminManageProfile /> },
       { path: "admin/add-package", element: <AddPackage></AddPackage> },
       { path: "admin/manage-users", element: <ManageUsers></ManageUsers> },

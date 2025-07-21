@@ -61,7 +61,6 @@ const AddPackage = () => {
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-xl font-semibold mb-4">Add New Tour Package</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-
         <input
           name="title"
           type="text"
@@ -115,13 +114,17 @@ const AddPackage = () => {
               <button
                 type="button"
                 onClick={() => removeImageField(idx)}
-                className="border px-3 py-1 rounded"
+                className="border px-3 py-1 cursor-pointer rounded"
               >
                 ✕
               </button>
             </div>
           ))}
-          <button type="button" onClick={addImageField} className="border px-3 py-1 rounded">
+          <button
+            type="button"
+            onClick={addImageField}
+            className="cursor-pointer border px-3 py-1 rounded"
+          >
             + Add Image
           </button>
         </div>
@@ -157,19 +160,23 @@ const AddPackage = () => {
                 <button
                   type="button"
                   onClick={() => removePlanField(idx)}
-                  className="border px-3 py-1 rounded"
+                  className="cursor-pointer border px-3 py-1 rounded"
                 >
                   Remove
                 </button>
               </div>
             </div>
           ))}
-          <button type="button" onClick={addPlanField} className="border px-3 py-1 rounded">
+          <button
+            type="button"
+            onClick={addPlanField}
+            className="border cursor-pointer px-3 py-1 rounded"
+          >
             + Add Day
           </button>
         </div>
 
-        <button type="submit" className="px-6 py-2 border rounded">
+        <button type="submit" className="px-6 cursor-pointer py-2 border rounded">
           Submit Package
         </button>
       </form>

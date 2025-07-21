@@ -1,116 +1,63 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+// import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
+import EditProfileModal from "./EditProfileModal"; // Create a simple modal component
+import { AuthContext } from "../contexts/AuthContext";
 
 const AdminManageProfile = () => {
-  const [admin, setAdmin] = useState({
-    name: "Admin User",
-    email: "admin@example.com",
-    image: "https://source.unsplash.com/100x100/?portrait",
-    role: "admin",
-  });
+  const { currentUser } = useContext(AuthContext);
+  const { displayName, email, photoURL } = currentUser;
 
-  const [stats, setStats] = useState({
-    totalPayment: 12450,
-    totalGuides: 12,
-    totalPackages: 28,
-    totalClients: 143,
-    totalStories: 55,
-  });
+  const [stats, setStats] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
-  const [editModalOpen, setEditModalOpen] = useState(false);
-  const [editForm, setEditForm] = useState({
-    name: admin.name,
-    image: admin.image,
-  });
-
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    setAdmin((prev) => ({ ...prev, ...editForm }));
-    setEditModalOpen(false);
-  };
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/admin/stats").then((res) => setStats(res.data));
+  }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h2 className="text-xl font-semibold">Welcome, {admin.name}</h2>
+    <div className="p-6 space-y-6">
+      <h2 className="text-2xl font-semibold">Welcome, {displayName}!</h2>
 
-      {/* Admin Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div className="border p-4 rounded">
-          <p className="font-semibold">Total Payment</p>
-          <p>${stats.totalPayment}</p>
-        </div>
-        <div className="border p-4 rounded">
-          <p className="font-semibold">Tour Guides</p>
-          <p>{stats.totalGuides}</p>
-        </div>
-        <div className="border p-4 rounded">
-          <p className="font-semibold">Packages</p>
-          <p>{stats.totalPackages}</p>
-        </div>
-        <div className="border p-4 rounded">
-          <p className="font-semibold">Clients</p>
-          <p>{stats.totalClients}</p>
-        </div>
-        <div className="border p-4 rounded">
-          <p className="font-semibold">Stories</p>
-          <p>{stats.totalStories}</p>
-        </div>
+      {/* Stats Panel */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatCard title="Total Payment" value={`$${stats.totalPayment || 0}`} />
+        <StatCard title="Total Tour Guides" value={stats.totalGuides || 0} />
+        <StatCard title="Total Packages" value={stats.totalPackages || 0} />
+        <StatCard title="Total Clients" value={stats.totalClients || 0} />
+        <StatCard title="Total Stories" value={stats.totalStories || 0} />
       </div>
 
-      {/* Profile Info */}
-      <div className="border rounded p-6 space-y-3">
-        <img src={admin.image} alt="Admin" className="w-20 h-20 rounded-full" />
-        <p>
-          <span className="font-semibold">Name:</span> {admin.name}
-        </p>
-        <p>
-          <span className="font-semibold">Email:</span> {admin.email}
-        </p>
-        <p>
-          <span className="font-semibold">Role:</span> {admin.role}
-        </p>
-        <button onClick={() => setEditModalOpen(true)} className="px-4 py-2 border rounded">
-          Edit Profile
-        </button>
-      </div>
-
-      {/* Edit Modal */}
-      {editModalOpen && (
-        <div className="fixed inset-0 bg-black/20 flex justify-center items-center">
-          <div className="bg-white border rounded p-6 w-full max-w-md space-y-4">
-            <h3 className="text-lg font-medium">Edit Profile</h3>
-            <form onSubmit={handleEditSubmit} className="space-y-4">
-              <input
-                type="text"
-                value={editForm.name}
-                onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                className="w-full border px-3 py-2 rounded"
-                placeholder="Name"
-              />
-              <input
-                type="text"
-                value={editForm.image}
-                onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
-                className="w-full border px-3 py-2 rounded"
-                placeholder="Image URL"
-              />
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setEditModalOpen(false)}
-                  className="px-4 py-2 border rounded"
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="px-4 py-2 border rounded">
-                  Save
-                </button>
-              </div>
-            </form>
+      {/* Admin Info */}
+      <div className="bg-white shadow-md p-4 rounded-md w-full md:w-2/3">
+        <div className="flex items-center gap-4">
+          <img src={photoURL} alt="Admin" className="w-24 h-24 rounded-full" />
+          <div>
+            <p className="font-bold">Name: {displayName}</p>
+            <p>Email: {email}</p>
+            <p>Role: Admin</p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="mt-2 px-4 py-1 bg-blue-600 text-white rounded cursor-pointer"
+            >
+              Edit Profile
+            </button>
           </div>
         </div>
+      </div>
+
+      {showModal && (
+        <EditProfileModal currentUser={currentUser} onClose={() => setShowModal(false)} />
       )}
     </div>
   );
 };
+
+const StatCard = ({ title, value }) => (
+  <div className="bg-blue-100 text-blue-800 p-4 rounded shadow text-center">
+    <p className="text-xl font-semibold">{value}</p>
+    <p className="text-sm">{title}</p>
+  </div>
+);
 
 export default AdminManageProfile;
