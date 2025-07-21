@@ -12,8 +12,14 @@ Welcome to the **client-side** of **ShonarBangla Travels** — a travel and tour
 
 ## 👤 Admin Credentials
 
-Username (Email): john.doe@gmail.com
-Password: admin@1234E
+> 🛡️ Use the following admin credentials to access the admin dashboard:
+
+| 🔐 **Field**    | **Credential**       |
+| --------------- | -------------------- |
+| 📧 **Email**    | `john.doe@gmail.com` |
+| 🔑 **Password** | `admin@1234E`        |
+
+> ⚠️ _For demo purposes only._
 
 ---
 
