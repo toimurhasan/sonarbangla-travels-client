@@ -19,6 +19,14 @@ const PackageDetails = () => {
     },
   });
 
+  const { data: tourGuides = [] } = useQuery({
+    queryKey: ["tourGuides"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:3000/api/users/tour-guides");
+      return res.json();
+    },
+  });
+
   const [showModal, setShowModal] = useState(false);
 
   if (isLoading) return <div className="text-center py-20">Loading...</div>;
@@ -58,7 +66,7 @@ const PackageDetails = () => {
                 <h4 className="font-bold">
                   {plan.day}: {plan.title}
                 </h4>
-                <p className="text-sm text-gray-700 mt-1">{plan.description}</p>
+                <p className="text-sm  mt-1">{plan.description}</p>
               </div>
             ))}
           </div>
@@ -70,10 +78,8 @@ const PackageDetails = () => {
             <FaUserTie className="text-secondary" /> Tour Guides
           </h3>
           <ul className="list-disc list-inside space-y-1">
-            {guides.map((guide) => (
-              <li key={guide.id} className="text-gray-800">
-                {guide.name}
-              </li>
+            {tourGuides.map((guide) => (
+              <li key={guide._id}>{guide.name}</li>
             ))}
           </ul>
         </div>
@@ -106,7 +112,7 @@ const PackageDetails = () => {
         {showModal && (
           <BookingModal
             packageData={trip}
-            guides={guides}
+            guides={tourGuides}
             onClose={() => setShowModal(false)}
             onSubmit={(bookingData) => {
               console.log("Send to server:", bookingData);
