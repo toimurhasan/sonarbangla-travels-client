@@ -51,10 +51,39 @@ const AddPackage = () => {
     setFormData((prev) => ({ ...prev, tourPlan: updated }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted:", formData);
-    // TODO: send formData to backend
+
+    try {
+      const response = await fetch("http://localhost:3000/api/packages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Package added:", result);
+        alert("Package added successfully!");
+        // Optionally reset the form
+        setFormData({
+          title: "",
+          type: "",
+          price: "",
+          image: "",
+          images: [""],
+          description: "",
+          tourPlan: [{ day: "", activities: "" }],
+        });
+      } else {
+        throw new Error("Failed to add package");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Check console for details.");
+    }
   };
 
   return (
