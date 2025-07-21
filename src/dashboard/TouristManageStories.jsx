@@ -80,7 +80,7 @@ const TouristManageStories = () => {
       {stories.map((story) => (
         <div key={story._id} className="border rounded shadow p-4 flex flex-col">
           <h3 className="font-semibold text-lg mb-2">{story.title}</h3>
-          <p className="flex-grow whitespace-pre-line mb-4">{story.content}</p>
+          <p className="flex-grow whitespace-pre-line mb-4">{story.description}</p>
           {story.images && story.images.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
               {story.images.map((imgUrl, idx) => (

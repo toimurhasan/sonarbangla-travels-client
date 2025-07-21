@@ -18,7 +18,7 @@ import TouristJoinTourGuide from "../dashboard/TouristJoinTourGuide";
 // import TourGuideDashboard from "../dashboard/TourGuideDashboard";
 import TourGuideManageProfile from "../dashboard/TourGuideManageProfile";
 import TourGuideAssignedTours from "../dashboard/TourGuideAssignedTours";
-import TourGuideStories from "../dashboard/TourGuideStories";
+// import TourGuideStories from "../dashboard/TourGuideStories";
 import AdminManageProfile from "../dashboard/AdminManageProfile";
 import AddPackage from "../dashboard/AddPackage";
 import ManageUsers from "../dashboard/ManageUsers";
@@ -72,8 +72,8 @@ const router = createBrowserRouter([
       { path: "tourist", element: <TouristManageProfile></TouristManageProfile> },
       { path: "tourist/manage-profile", element: <TouristManageProfile></TouristManageProfile> },
       { path: "tourist/my-bookings", element: <TouristMyBookings /> },
-      { path: "tourist/add-story", element: <TouristAddStories></TouristAddStories> },
-      { path: "tourist/manage-stories", element: <TouristManageStories></TouristManageStories> },
+      { path: "add-story", element: <TouristAddStories></TouristAddStories> },
+      { path: "manage-stories", element: <TouristManageStories></TouristManageStories> },
       { path: "tourist/stories/edit/:storyId", element: <EditStories></EditStories> },
       { path: "tourist/join-tour-guide", element: <TouristJoinTourGuide></TouristJoinTourGuide> },
 
@@ -81,8 +81,8 @@ const router = createBrowserRouter([
       { path: "tourguide", element: <TourGuideManageProfile /> },
       { path: "tourguide/manage-profile", element: <TourGuideManageProfile /> },
       { path: "tourguide/assigned-tours", element: <TourGuideAssignedTours /> },
-      { path: "tourguide/add-story", element: <TourGuideStories /> },
-      { path: "tourguide/manage-stories", element: <TouristManageStories /> },
+      { path: "add-story", element: <TouristAddStories></TouristAddStories> },
+      { path: "manage-stories", element: <TouristManageStories /> },
 
       // Admin
       { path: "admin/manage-profile", element: <AdminManageProfile /> },

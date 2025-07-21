@@ -63,7 +63,7 @@ const TouristJoinTourGuide = () => {
           />
         </div>
 
-        <button type="submit" className="px-4 py-2 rounded border font-medium">
+        <button type="submit" className="px-4 py-2 cursor-pointer rounded border font-medium">
           Submit Application
         </button>
       </form>
@@ -74,7 +74,10 @@ const TouristJoinTourGuide = () => {
           <div className="bg-white rounded p-6 max-w-sm w-full text-center shadow-lg">
             <h3 className="text-lg font-semibold mb-4">Application Successful</h3>
             <p>Your tour guide application has been submitted successfully.</p>
-            <button onClick={() => setModalOpen(false)} className="mt-6 px-4 py-2 border rounded">
+            <button
+              onClick={() => setModalOpen(false)}
+              className="mt-6 px-4 cursor-pointer py-2 border rounded"
+            >
               Close
             </button>
           </div>

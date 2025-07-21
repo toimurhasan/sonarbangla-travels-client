@@ -66,7 +66,7 @@ const TouristAddStories = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate("/dashboard/tourist/manage-stories");
+      navigate("/dashboard/manage-stories");
     } catch (error) {
       console.error("Failed to save story", error);
       alert("Failed to save story. Try again.");

@@ -5,15 +5,15 @@ const linksByRole = {
   tourist: [
     { to: "/dashboard/tourist/manage-profile", label: "Manage Profile" },
     { to: "/dashboard/tourist/my-bookings", label: "My Bookings" },
-    { to: "/dashboard/tourist/add-story", label: "Add Story" },
-    { to: "/dashboard/tourist/manage-stories", label: "Manage Stories" },
+    { to: "/dashboard/add-story", label: "Add Story" },
+    { to: "/dashboard/manage-stories", label: "Manage Stories" },
     { to: "/dashboard/tourist/join-tour-guide", label: "Join as Tour Guide" },
   ],
   tourGuide: [
     { to: "/dashboard/tourguide/manage-profile", label: "Manage Profile" },
     { to: "/dashboard/tourguide/assigned-tours", label: "My Assigned Tours" },
-    { to: "/dashboard/tourguide/add-story", label: "Add Story" },
-    { to: "/dashboard/tourguide/manage-stories", label: "Manage Stories" },
+    { to: "/dashboard/add-story", label: "Add Story" },
+    { to: "/dashboard/manage-stories", label: "Manage Stories" },
   ],
   admin: [
     { to: "/dashboard/admin/manage-profile", label: "Manage Profile" },

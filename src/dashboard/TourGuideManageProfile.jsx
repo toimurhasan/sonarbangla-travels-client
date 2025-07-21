@@ -1,35 +1,34 @@
-import { useState } from "react";
+import { use, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const TourGuideManageProfile = () => {
-  const user = {
-    name: "Shafayet Rahman",
-    email: "shafayet@example.com",
-    photo: "https://source.unsplash.com/150x150/?portrait,man",
-    role: "Tour Guide",
-  };
+  const { currentUser } = use(AuthContext);
 
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div className="px-4 py-8 max-w-xl mx-auto space-y-6">
-      <h2 className="text-2xl font-bold text-center">Welcome, {user.name}!</h2>
+      <h2 className="text-2xl font-bold text-center">Welcome, {currentUser.displayName}!</h2>
 
       <div className="border rounded-md shadow p-6 space-y-4">
         <div className="flex flex-col items-center gap-4">
           <img
-            src={user.photo}
-            alt={user.name}
+            src={currentUser.photoURL}
+            alt={currentUser.displayName}
             className="w-24 h-24 rounded-full object-cover border"
           />
           <div className="text-center space-y-1">
-            <p className="font-medium">Name: {user.name}</p>
-            <p className="text-sm">{user.email}</p>
-            <p className="text-sm">{user.role}</p>
+            <p className="font-medium">Name: {currentUser.displayName}</p>
+            <p className="text-sm">Email: {currentUser.email}</p>
+            <p className="text-sm">Tour Guide</p>
           </div>
         </div>
 
         <div className="flex justify-center">
-          <button onClick={() => setIsEditing(true)} className="px-4 py-2 rounded border">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="px-4 py-2 rounded cursor-pointer border"
+          >
             Edit Profile
           </button>
         </div>
@@ -43,23 +42,23 @@ const TourGuideManageProfile = () => {
             <form className="space-y-3">
               <input
                 type="text"
-                defaultValue={user.name}
+                defaultValue={currentUser.displayName}
                 className="w-full border px-3 py-2 rounded"
               />
               <input
                 type="text"
-                defaultValue={user.photo}
+                defaultValue={currentUser.photoURL}
                 className="w-full border px-3 py-2 rounded"
               />
               <input
                 type="email"
-                value={user.email}
+                value={currentUser.email}
                 readOnly
                 className="w-full border px-3 py-2 rounded"
               />
               <input
                 type="text"
-                value={user.role}
+                value={"Tour Guide"}
                 readOnly
                 className="w-full border px-3 py-2 rounded"
               />
@@ -68,11 +67,11 @@ const TourGuideManageProfile = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="px-4 py-2 rounded border"
+                  className="px-4 py-2 rounded  cursor-pointer"
                 >
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded border">
+                <button type="submit" className="px-4 py-2 rounded border cursor-pointer">
                   Save
                 </button>
               </div>
