@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AddPackage = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +67,12 @@ const AddPackage = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Package added:", result);
-        alert("Package added successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Package added successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         // Optionally reset the form
         setFormData({
           title: "",

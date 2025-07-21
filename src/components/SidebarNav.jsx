@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const linksByRole = {
   tourist: [
@@ -33,7 +33,7 @@ const SidebarNav = ({ userRole }) => {
     ${isActive ? "bg-blue-600 text-white" : "text-gray-500 hover:bg-gray-200 hover:text-gray-900"}`;
 
   return (
-    <nav className=" min-h-screen p-4">
+    <nav className=" min-h-[calc(100vh-88px)] flex flex-col justify-between">
       <ul className="space-y-3">
         {links.map(({ to, label }) => (
           <li key={to}>
@@ -43,6 +43,9 @@ const SidebarNav = ({ userRole }) => {
           </li>
         ))}
       </ul>
+      <Link className="font-semibold link hover:text-primary" to={"/"}>
+        Go to Homepage
+      </Link>
     </nav>
   );
 };

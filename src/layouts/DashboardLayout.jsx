@@ -1,6 +1,6 @@
 // import { Outlet } from "react-router";
 
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import SidebarNav from "../components/SidebarNav";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
@@ -67,16 +67,13 @@ const DashboardLayout = () => {
         {/* Page content here */}
         <div className="flex">
           {/* Sidebar */}
-          <aside className="w-64 bg-gray-800 text-white min-h-screen p-4 hidden sm:block">
+          <aside className="w-64 fixed bg-gray-800 text-white  p-4 hidden sm:block">
             <div className="text-2xl font-bold mb-6">S.B.T. Dashboard</div>
             {/* Add navigation links here based on role (optional) */}
             {/* Example: <Link to="/dashboard/tourist/my-bookings">My Bookings</Link> */}
             <SidebarNav userRole={role} />
-            <Link className="font-semibold link hover:text-primary" to={"/"}>
-              Go to Homepage
-            </Link>
           </aside>
-          <div className="flex-1">
+          <div className="flex-1 sm:ml-64 ">
             <Outlet />
           </div>
         </div>
