@@ -1,42 +1,88 @@
-import { useState } from "react";
-
-const initialApplications = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "tourist",
-    cv: "https://example.com/john_cv.pdf",
-    reason: "I love guiding and know my city deeply.",
-  },
-  {
-    id: "2",
-    name: "Sarah Khan",
-    email: "sarah@example.com",
-    role: "tourist",
-    cv: "https://example.com/sarah_cv.pdf",
-    reason: "I'm a certified guide with 3 years of experience.",
-  },
-];
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const ManageCandidates = () => {
-  const [applications, setApplications] = useState(initialApplications);
+  const [applications, setApplications] = useState([]);
 
-  const handleAccept = (id) => {
-    const accepted = applications.find((app) => app.id === id);
-    if (accepted) {
-      console.log("Promoted to tour-guide:", {
-        ...accepted,
-        role: "tour-guide",
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/applications");
+        const data = await res.json();
+        setApplications(data);
+      } catch (err) {
+        console.error("Error fetching applications:", err);
+      }
+    };
+
+    fetchApplications();
+  }, []);
+
+  const handleAccept = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/applications/accept/${id}`, {
+        method: "PATCH",
       });
-      setApplications((prev) => prev.filter((app) => app.id !== id));
+
+      if (res.ok) {
+        setApplications((prev) => prev.filter((app) => app._id !== id));
+
+        Swal.fire({
+          icon: "success",
+          title: "Accepted",
+          text: "Application has been accepted.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to accept application.",
+        });
+      }
+    } catch (err) {
+      console.error("Accept failed:", err);
     }
   };
 
-  const handleReject = (id) => {
-    const confirmed = confirm("Are you sure you want to reject this application?");
-    if (confirmed) {
-      setApplications((prev) => prev.filter((app) => app.id !== id));
+  const handleReject = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to undo this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, reject it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/applications/reject/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        setApplications((prev) => prev.filter((app) => app._id !== id));
+
+        Swal.fire({
+          icon: "success",
+          title: "Rejected",
+          text: "Application has been rejected.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to reject application.",
+        });
+      }
+    } catch (err) {
+      console.error("Reject failed:", err);
     }
   };
 
@@ -59,7 +105,7 @@ const ManageCandidates = () => {
           <tbody>
             {applications.length > 0 ? (
               applications.map((app) => (
-                <tr key={app.id}>
+                <tr key={app._id}>
                   <td className="border px-4 py-2">{app.name}</td>
                   <td className="border px-4 py-2">{app.email}</td>
                   <td className="border px-4 py-2">
@@ -71,14 +117,14 @@ const ManageCandidates = () => {
                   <td className="border px-4 py-2 capitalize">{app.role}</td>
                   <td className="border px-4 py-2 space-x-2">
                     <button
-                      onClick={() => handleAccept(app.id)}
-                      className="px-3 py-1 border rounded"
+                      onClick={() => handleAccept(app._id)}
+                      className="px-3 py-1 border rounded cursor-pointer"
                     >
                       Accept
                     </button>
                     <button
-                      onClick={() => handleReject(app.id)}
-                      className="px-3 py-1 border rounded"
+                      onClick={() => handleReject(app._id)}
+                      className="px-3 py-1 border cursor-pointer rounded"
                     >
                       Reject
                     </button>

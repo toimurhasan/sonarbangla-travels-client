@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const TouristMyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -24,25 +25,23 @@ const TouristMyBookings = () => {
   };
 
   const handleCancel = async (bookingId) => {
-    // console.log(bookingId);
     try {
       const res = await fetch(`http://localhost:3000/api/bookings/${bookingId}/cancel`, {
         method: "PATCH",
       });
 
       if (res.ok) {
-        // Update UI immediately
         setBookings((prev) =>
           prev.map((b) => (b._id === bookingId ? { ...b, status: "cancelled" } : b))
         );
       } else {
         const errorData = await res.json();
         console.error("Cancel failed:", errorData.error);
-        alert("Failed to cancel booking: " + errorData.error);
+        Swal.fire("Failed", "Failed to cancel booking: " + errorData.error, "error");
       }
     } catch (err) {
       console.error("Network error:", err);
-      alert("Network error while canceling booking.");
+      Swal.fire("Error", "Network error while canceling booking.", "error");
     }
   };
 

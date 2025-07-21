@@ -15,7 +15,6 @@ const TouristAddStories = () => {
 
   const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-
     setUploading(true);
     const uploadedImageUrls = [];
 
@@ -31,6 +30,13 @@ const TouristAddStories = () => {
         uploadedImageUrls.push(data.data.display_url);
       } catch (error) {
         console.error("Image upload failed:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Image upload failed",
+          text: "Please try again.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     }
 
@@ -46,7 +52,12 @@ const TouristAddStories = () => {
     e.preventDefault();
 
     if (!currentUser?.email) {
-      return alert("User not authenticated.");
+      return Swal.fire({
+        icon: "error",
+        title: "User not authenticated",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
 
     const storyData = {
@@ -69,7 +80,13 @@ const TouristAddStories = () => {
       navigate("/dashboard/manage-stories");
     } catch (error) {
       console.error("Failed to save story", error);
-      alert("Failed to save story. Try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Failed to save story",
+        text: "Please try again.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 

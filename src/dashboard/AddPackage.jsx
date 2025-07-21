@@ -88,7 +88,6 @@ const AddPackage = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong. Check console for details.");
     }
   };
 

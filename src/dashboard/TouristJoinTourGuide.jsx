@@ -1,17 +1,70 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const TouristJoinTourGuide = () => {
   const [title, setTitle] = useState("");
   const [reason, setReason] = useState("");
   const [cvLink, setCvLink] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
+  const { currentUser } = use(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: Send application data to backend here
+    try {
+      const response = await fetch("http://localhost:3000/api/applications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          reason,
+          cv: cvLink,
+          name: currentUser.displayName,
+          email: currentUser.email,
+        }),
+      });
 
-    setModalOpen(true);
+      if (response.ok) {
+        // Success alert
+        Swal.fire({
+          icon: "success",
+          title: "Application Submitted",
+          text: "Your tour guide application was submitted successfully.",
+          confirmButtonText: "OK",
+        });
+
+        // Clear form
+        setTitle("");
+        setReason("");
+        setCvLink("");
+      } else if (response.status === 409) {
+        // Duplicate application alert
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You have already applied to become a tour guide.",
+          confirmButtonText: "Try again",
+        });
+      } else {
+        // General error
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Failed to submit application. Please try again later.",
+          confirmButtonText: "Try again",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong. Please try again.",
+        confirmButtonText: "Try again",
+      });
+    }
   };
 
   return (
@@ -67,22 +120,6 @@ const TouristJoinTourGuide = () => {
           Submit Application
         </button>
       </form>
-
-      {/* Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded p-6 max-w-sm w-full text-center shadow-lg">
-            <h3 className="text-lg font-semibold mb-4">Application Successful</h3>
-            <p>Your tour guide application has been submitted successfully.</p>
-            <button
-              onClick={() => setModalOpen(false)}
-              className="mt-6 px-4 cursor-pointer py-2 border rounded"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
