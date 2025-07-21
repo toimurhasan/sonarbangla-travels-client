@@ -19,7 +19,7 @@ const Navbar = () => {
   const [role, setRole] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/user-role?email=${currentUser.email}`)
+    fetch(`http://localhost:3000/api/user-role?email=${currentUser?.email}`)
       .then((res) => res.json())
       .then((data) => setRole(data.role));
   }, []);
@@ -101,7 +101,7 @@ const Navbar = () => {
               >
                 <div className="px-3">
                   <h3>{currentUser.displayName}</h3>
-                  <p>{currentUser.email}</p>
+                  <p>{currentUser?.email}</p>
                 </div>
                 <div className="divider mt-2 mb-0"></div>
                 <li>
