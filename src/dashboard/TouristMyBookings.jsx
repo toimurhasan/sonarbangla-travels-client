@@ -1,26 +1,26 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
 
 const TouristMyBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const bookingsPerPage = 10;
 
-  const { currentUser } = use(AuthContext);
+  const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
-    // TODO: Fetch bookings from API here
     fetch(`http://localhost:3000/api/bookings?email=${currentUser.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Filtered bookings: ", data);
         setBookings(data);
       });
-    // Example static data for now:
-  }, []);
+  }, [currentUser.email]);
 
   const handlePay = (bookingId) => {
-    // Redirect to payment page for this booking
     navigate(`/dashboard/tourist/payment/${bookingId}`);
   };
 
@@ -36,14 +36,18 @@ const TouristMyBookings = () => {
         );
       } else {
         const errorData = await res.json();
-        console.error("Cancel failed:", errorData.error);
         Swal.fire("Failed", "Failed to cancel booking: " + errorData.error, "error");
       }
     } catch (err) {
-      console.error("Network error:", err);
       Swal.fire("Error", "Network error while canceling booking.", "error");
     }
   };
+
+  // Pagination logic
+  const indexOfLastBooking = currentPage * bookingsPerPage;
+  const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
+  const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);
+  const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
   return (
     <div className="p-4">
@@ -60,15 +64,15 @@ const TouristMyBookings = () => {
           </tr>
         </thead>
         <tbody>
-          {bookings.length === 0 ? (
+          {currentBookings.length === 0 ? (
             <tr>
               <td colSpan={6} className="text-center p-4">
                 No bookings found.
               </td>
             </tr>
           ) : (
-            bookings.map((booking) => (
-              <tr key={booking.id}>
+            currentBookings.map((booking) => (
+              <tr key={booking._id}>
                 <td className="border p-2">{booking.packageName}</td>
                 <td className="border p-2">{booking.guide}</td>
                 <td className="border p-2">{new Date(booking.tourDate).toLocaleDateString()}</td>
@@ -83,14 +87,10 @@ const TouristMyBookings = () => {
                 <td className="border p-2 space-x-2">
                   {booking.status === "pending" && (
                     <>
-                      <button onClick={() => handlePay(booking.id)} type="button" className="btn">
+                      <button onClick={() => handlePay(booking._id)} className="btn">
                         Pay
                       </button>
-                      <button
-                        onClick={() => handleCancel(booking._id)}
-                        type="button"
-                        className="btn"
-                      >
+                      <button onClick={() => handleCancel(booking._id)} className="btn">
                         Cancel
                       </button>
                     </>
@@ -101,6 +101,34 @@ const TouristMyBookings = () => {
           )}
         </tbody>
       </table>
+
+      {/* Pagination Footer with Info */}
+      {bookings.length > 0 && (
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-4">
+          <div className="text-gray-700">
+            Showing{" "}
+            <span className="font-semibold">
+              {indexOfFirstBooking + 1}–{Math.min(indexOfLastBooking, bookings.length)}
+            </span>{" "}
+            of <span className="font-semibold">{bookings.length}</span> bookings
+          </div>
+
+          {/* Page Buttons */}
+          <div className="flex space-x-2">
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-3 py-1 border rounded ${
+                  currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

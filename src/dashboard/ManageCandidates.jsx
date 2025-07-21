@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 
 const ManageCandidates = () => {
   const [applications, setApplications] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const applicationsPerPage = 10;
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -10,6 +12,7 @@ const ManageCandidates = () => {
         const res = await fetch("http://localhost:3000/api/applications");
         const data = await res.json();
         setApplications(data);
+        setCurrentPage(1); // reset page on new fetch
       } catch (err) {
         console.error("Error fetching applications:", err);
       }
@@ -26,7 +29,6 @@ const ManageCandidates = () => {
 
       if (res.ok) {
         setApplications((prev) => prev.filter((app) => app._id !== id));
-
         Swal.fire({
           icon: "success",
           title: "Accepted",
@@ -66,7 +68,6 @@ const ManageCandidates = () => {
 
       if (res.ok) {
         setApplications((prev) => prev.filter((app) => app._id !== id));
-
         Swal.fire({
           icon: "success",
           title: "Rejected",
@@ -86,6 +87,13 @@ const ManageCandidates = () => {
     }
   };
 
+  // Pagination logic
+  const totalApps = applications.length;
+  const totalPages = Math.ceil(totalApps / applicationsPerPage);
+  const indexOfLastApp = currentPage * applicationsPerPage;
+  const indexOfFirstApp = indexOfLastApp - applicationsPerPage;
+  const currentApplications = applications.slice(indexOfFirstApp, indexOfLastApp);
+
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-6">
       <h2 className="text-xl font-semibold">Manage Tour Guide Candidates</h2>
@@ -103,8 +111,8 @@ const ManageCandidates = () => {
             </tr>
           </thead>
           <tbody>
-            {applications.length > 0 ? (
-              applications.map((app) => (
+            {currentApplications.length > 0 ? (
+              currentApplications.map((app) => (
                 <tr key={app._id}>
                   <td className="border px-4 py-2">{app.name}</td>
                   <td className="border px-4 py-2">{app.email}</td>
@@ -141,6 +149,33 @@ const ManageCandidates = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Footer */}
+      {totalApps > 0 && (
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-4">
+          <div className="text-gray-700">
+            Showing{" "}
+            <span className="font-semibold">
+              {indexOfFirstApp + 1}–{Math.min(indexOfLastApp, totalApps)}
+            </span>{" "}
+            of <span className="font-semibold">{totalApps}</span> applications
+          </div>
+
+          <div className="flex space-x-2">
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-3 py-1 border rounded ${
+                  currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
