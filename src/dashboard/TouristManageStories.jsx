@@ -70,7 +70,7 @@ const TouristManageStories = () => {
   };
 
   const handleEdit = (storyId) => {
-    navigate(`/dashboard/tourist/edit-story/${storyId}`);
+    navigate(`/dashboard/tourist/stories/edit/${storyId}`);
   };
 
   return (
@@ -93,11 +93,11 @@ const TouristManageStories = () => {
               ))}
             </div>
           )}
-          <div className="flex justify-end space-x-2">
-            <button onClick={() => handleEdit(story._id)} className="px-3 py-1 border rounded">
+          <div className="flex  space-x-2">
+            <button onClick={() => handleEdit(story._id)} className="btn btn-secondary btn-sm ">
               Edit
             </button>
-            <button onClick={() => handleDelete(story._id)} className="px-3 py-1 border rounded">
+            <button onClick={() => handleDelete(story._id)} className="btn btn-secondary btn-sm ">
               Delete
             </button>
           </div>

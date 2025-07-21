@@ -1,6 +1,6 @@
 // import { Outlet } from "react-router";
 
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import SidebarNav from "../components/SidebarNav";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
@@ -72,6 +72,9 @@ const DashboardLayout = () => {
             {/* Add navigation links here based on role (optional) */}
             {/* Example: <Link to="/dashboard/tourist/my-bookings">My Bookings</Link> */}
             <SidebarNav userRole={role} />
+            <Link className="font-semibold link hover:text-primary" to={"/"}>
+              Go to Homepage
+            </Link>
           </aside>
           <div className="flex-1">
             <Outlet />
