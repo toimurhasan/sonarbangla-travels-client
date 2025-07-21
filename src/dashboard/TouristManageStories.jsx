@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const TouristManageStories = () => {
   const [stories, setStories] = useState([]);
   const navigate = useNavigate();
+  const { currentUser } = use(AuthContext);
 
   useEffect(() => {
     // Fetch all stories from API on mount
     async function fetchStories() {
       try {
-        const res = await fetch("/api/stories");
+        const res = await fetch(
+          `http://localhost:3000/api/stories/user?email=${currentUser.email}`
+        );
         const data = await res.json();
         setStories(data);
       } catch (error) {
@@ -20,14 +25,48 @@ const TouristManageStories = () => {
   }, []);
 
   const handleDelete = async (storyId) => {
-    if (!window.confirm("Are you sure you want to delete this story?")) return;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`http://localhost:3000/api/stories/${storyId}`, {
+            method: "DELETE",
+          });
 
-    try {
-      await fetch(`/api/stories/${storyId}`, { method: "DELETE" });
-      setStories((prev) => prev.filter((story) => story._id !== storyId));
-    } catch (error) {
-      console.error("Failed to delete story", error);
-    }
+          const data = await res.json();
+
+          if (res.ok && data.message === "Story deleted successfully") {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your story has been deleted.",
+              icon: "success",
+            });
+            // Remove the deleted story from state
+            setStories((prev) => prev.filter((story) => story._id !== storyId));
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: data.message || "Failed to delete story.",
+              icon: "error",
+            });
+          }
+        } catch (error) {
+          console.error("Failed to delete story", error);
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong while deleting the story.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
   const handleEdit = (storyId) => {

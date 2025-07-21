@@ -5,8 +5,8 @@ const linksByRole = {
   tourist: [
     { to: "/dashboard/tourist/manage-profile", label: "Manage Profile" },
     { to: "/dashboard/tourist/my-bookings", label: "My Bookings" },
-    { to: "/dashboard/tourist/manage-stories", label: "Manage Stories" },
     { to: "/dashboard/tourist/add-story", label: "Add Story" },
+    { to: "/dashboard/tourist/manage-stories", label: "Manage Stories" },
     { to: "/dashboard/tourist/join-tour-guide", label: "Join as Tour Guide" },
   ],
   tourGuide: [
@@ -15,12 +15,12 @@ const linksByRole = {
     { to: "/dashboard/tourguide/add-story", label: "Add Story" },
     { to: "/dashboard/tourguide/manage-stories", label: "Manage Stories" },
   ],
- admin: [
-  { to: "/dashboard/admin/manage-profile", label: "Manage Profile" },
-  { to: "/dashboard/admin/add-package", label: "Add Package" },
-  { to: "/dashboard/admin/manage-users", label: "Manage Users" },
-  { to: "/dashboard/admin/manage-candidates", label: "Manage Candidates" },
-],
+  admin: [
+    { to: "/dashboard/admin/manage-profile", label: "Manage Profile" },
+    { to: "/dashboard/admin/add-package", label: "Add Package" },
+    { to: "/dashboard/admin/manage-users", label: "Manage Users" },
+    { to: "/dashboard/admin/manage-candidates", label: "Manage Candidates" },
+  ],
 
   // add more roles as needed
 };

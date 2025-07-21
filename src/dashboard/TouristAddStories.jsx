@@ -1,16 +1,41 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { use, useState } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const TouristAddStories = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
-  const handleImageChange = (e) => {
-    // Convert FileList to array and append to images state
+  const { currentUser } = use(AuthContext);
+
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-    setImages((prev) => [...prev, ...files]);
+
+    setUploading(true);
+    const uploadedImageUrls = [];
+
+    for (let file of files) {
+      const imgFormData = new FormData();
+      imgFormData.append("image", file);
+
+      try {
+        const { data } = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+          imgFormData
+        );
+        uploadedImageUrls.push(data.data.display_url);
+      } catch (error) {
+        console.error("Image upload failed:", error);
+      }
+    }
+
+    setImages((prev) => [...prev, ...uploadedImageUrls]);
+    setUploading(false);
   };
 
   const handleRemoveImage = (index) => {
@@ -20,22 +45,31 @@ const TouristAddStories = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare form data for images + other fields
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    images.forEach((img, i) => formData.append("images", img));
+    if (!currentUser?.email) {
+      return alert("User not authenticated.");
+    }
 
-    // TODO: Replace with actual API call to save story
+    const storyData = {
+      title,
+      description: content,
+      images,
+      userName: currentUser.displayName || "Anonymous",
+      userEmail: currentUser.email,
+      userPhoto: currentUser.photoURL || "",
+    };
+
     try {
-      await fetch("/api/stories", {
-        method: "POST",
-        body: formData,
+      await axios.post("http://localhost:3000/api/stories/add-stories", storyData);
+      Swal.fire({
+        icon: "success",
+        title: "Your story has been saved!",
+        showConfirmButton: false,
+        timer: 1500,
       });
-      // After save, navigate to manage stories route
       navigate("/dashboard/tourist/manage-stories");
     } catch (error) {
       console.error("Failed to save story", error);
+      alert("Failed to save story. Try again.");
     }
   };
 
@@ -72,34 +106,42 @@ const TouristAddStories = () => {
           />
         </div>
         <div>
-          <label className="block mb-1 font-medium">Upload Images</label>
-          <input type="file" multiple accept="image/*" onChange={handleImageChange} />
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">Upload images</legend>
+            <input
+              type="file"
+              className="file-input"
+              multiple
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={uploading}
+            />
+            <label className="label">Max size 2MB</label>
+          </fieldset>
+          {uploading && <p className="text-sm text-blue-500">Uploading...</p>}
           {images.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2">
-              {images.map((img, index) => {
-                const url = URL.createObjectURL(img);
-                return (
-                  <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
-                    <img
-                      src={url}
-                      alt={`preview-${index}`}
-                      className="object-cover w-full h-full"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(index)}
-                      className="absolute top-0 right-0 bg-gray-200 rounded-full p-1 text-sm"
-                      aria-label="Remove image"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                );
-              })}
+              {images.map((imgUrl, index) => (
+                <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
+                  <img
+                    src={imgUrl}
+                    alt={`uploaded-${index}`}
+                    className="object-cover w-full h-full"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="absolute top-0 right-0 bg-gray-200 rounded-full p-1 text-sm"
+                    aria-label="Remove image"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
-        <button type="submit" className="px-4 py-2 rounded border font-medium">
+        <button type="submit" className="btn btn-primary" disabled={uploading}>
           Submit Story
         </button>
       </form>
