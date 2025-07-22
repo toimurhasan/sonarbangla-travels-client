@@ -1,8 +1,10 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { data } from "react-router";
+import Swal from "sweetalert2";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ bookingId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState(null);
@@ -15,6 +17,15 @@ const CheckoutForm = () => {
   //     };
   //     getClientSecret();
   //   }, []);
+
+  const [price, setPrice] = useState(0);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/booking/${bookingId}`)
+      .then((res) => res.json())
+      .then((data) => setPrice(data.price * 100));
+  }, []);
+
+  // console.log(typeof price);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
@@ -30,45 +41,52 @@ const CheckoutForm = () => {
       setProcessing(false);
       return;
     }
+    if (price) {
+      // Step 1: Create PaymentIntent on your backend
+      try {
+        const res = await fetch("http://localhost:3000/api/create-payment-intent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: price, // amount in cents (i.e., $20.00)
+            currency: "usd", // or "bdt", "eur", etc.
+          }),
+        });
 
-    // Step 1: Create PaymentIntent on your backend
-    try {
-      const res = await fetch("http://localhost:3000/api/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: 2000, // amount in cents (i.e., $20.00)
-          currency: "usd", // or "bdt", "eur", etc.
-        }),
-      });
+        const data = await res.json();
+        const clientSecret = data.clientSecret;
 
-      const data = await res.json();
-      const clientSecret = data.clientSecret;
+        // Step 2: Confirm the card payment using clientSecret
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: card,
+          },
+        });
 
-      // Step 2: Confirm the card payment using clientSecret
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-        },
-      });
+        if (result.error) {
+          console.error("[PaymentError]", result.error);
+          setCardError(result.error.message);
+        } else {
+          if (result.paymentIntent.status === "succeeded") {
+            console.log("[PaymentIntent]", result.paymentIntent);
+            // TODO: Save transaction info to your DB and update booking status
 
-      if (result.error) {
-        console.error("[PaymentError]", result.error);
-        setCardError(result.error.message);
-      } else {
-        if (result.paymentIntent.status === "succeeded") {
-          console.log("[PaymentIntent]", result.paymentIntent);
-          // TODO: Save transaction info to your DB and update booking status
-          alert("Payment Successful!");
+            Swal.fire({
+              icon: "success",
+              title: "Payment Successful!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         }
+      } catch (err) {
+        console.error("Payment failed:", err);
+        setCardError("Payment failed. Please try again.");
+      } finally {
+        setProcessing(false);
       }
-    } catch (err) {
-      console.error("Payment failed:", err);
-      setCardError("Payment failed. Please try again.");
-    } finally {
-      setProcessing(false);
     }
   };
 

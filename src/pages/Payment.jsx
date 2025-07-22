@@ -11,7 +11,7 @@ const Payment = () => {
       <h1 className="py-4 text-2xl font-semibold">Pay for Booking: {bookingId}</h1>
       {/* Stripe logic goes here */}
       <Elements stripe={stripePromise}>
-        <CheckoutForm />
+        <CheckoutForm bookingId={bookingId} />
       </Elements>
     </div>
   );
