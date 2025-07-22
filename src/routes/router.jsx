@@ -26,6 +26,7 @@ import ManageCandidates from "../dashboard/ManageCandidates";
 import ForgetPassword from "../pages/ForgetPassword";
 import Story from "../pages/Story";
 import EditStories from "../dashboard/EditStories";
+import Payment from "../pages/Payment";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
       { path: "manage-stories", element: <TouristManageStories></TouristManageStories> },
       { path: "tourist/stories/edit/:storyId", element: <EditStories></EditStories> },
       { path: "tourist/join-tour-guide", element: <TouristJoinTourGuide></TouristJoinTourGuide> },
+      { path: "tourist/payment/:bookingId", element: <Payment></Payment> },
 
       // Tour Guide
       { path: "tourguide", element: <TourGuideManageProfile /> },
