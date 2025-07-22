@@ -71,19 +71,37 @@ const CheckoutForm = ({ bookingId }) => {
         } else {
           if (result.paymentIntent.status === "succeeded") {
             console.log("[PaymentIntent]", result.paymentIntent);
-            // TODO: Save transaction info to your DB and update booking status
 
             Swal.fire({
               icon: "success",
               title: "Payment Successful!",
-              showConfirmButton: false,
-              timer: 1500,
+              text: `Transaction ID: ${result.paymentIntent.id}`,
             });
+
+            // Save payment to DB and update booking status
+            try {
+              await axios.post("http://localhost:3000/api/payments", {
+                bookingId: bookingId,
+                amount: result.paymentIntent.amount, // in cents
+                currency: result.paymentIntent.currency,
+                transactionId: result.paymentIntent.id,
+                paymentMethod: result.paymentIntent.payment_method,
+                status: "in review", // new status
+                paymentDate: new Date().toISOString(),
+              });
+            } catch (error) {
+              console.error("Failed to save payment:", error);
+              Swal.fire({
+                icon: "warning",
+                title: "Payment done, but failed to update database.",
+                text: "Please contact support.",
+              });
+            }
           }
         }
       } catch (err) {
         console.error("Payment failed:", err);
-        setCardError("Payment failed. Please try again.");
+        setCardError("Payment failed. ");
       } finally {
         setProcessing(false);
       }
