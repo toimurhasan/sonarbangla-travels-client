@@ -9,7 +9,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
   //   const { currentUser } = useAuth(); // Assume user = { name, email, photo }
   const { currentUser } = use(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedGuide, setSelectedGuide] = useState(guides?.[0]?.name || "");
+  const [selectedGuide, setSelectedGuide] = useState(guides?.[0]?.email || "");
   // const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -152,7 +152,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
               required
             >
               {guides.map((guide) => (
-                <option key={guide._id} value={guide.name}>
+                <option key={guide._id} value={guide.email}>
                   {guide.name}
                 </option>
               ))}

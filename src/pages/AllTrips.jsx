@@ -17,10 +17,10 @@ const AllTrips = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {packages?.map((pkg, index) => (
           <div key={index} className="border border-base-300 rounded-lg shadow-md overflow-hidden">
-            <img src={pkg.image} alt={pkg.tripTitle} className="w-full h-48 object-cover" />
+            <img src={pkg.image} alt={pkg.title} className="w-full h-48 object-cover" />
             <div className="p-4">
               <p className="text-sm text-gray-500">{pkg.tourType}</p>
-              <h3 className="text-xl font-semibold mb-2">{pkg.tripTitle}</h3>
+              <h3 className="text-xl font-semibold mb-2">{pkg.title}</h3>
               <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}TK</p>
               <button
                 className="btn-primary btn px-4 py-2 rounded transition"

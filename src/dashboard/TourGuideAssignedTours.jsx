@@ -1,103 +1,110 @@
-import { useState } from "react";
-
-const sampleAssignedTours = [
-  {
-    id: 1,
-    packageName: "Sundarbans Adventure",
-    touristName: "Toimur Hasan",
-    tourDate: "2025-08-10",
-    price: 200,
-    status: "in-review", // pending | in-review | accepted | rejected
-  },
-  {
-    id: 2,
-    packageName: "Cox’s Bazar Retreat",
-    touristName: "Anika Sultana",
-    tourDate: "2025-08-22",
-    price: 180,
-    status: "pending",
-  },
-];
+import React, { useEffect, useState, useContext } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../contexts/AuthContext";
 
 const TourGuideAssignedTours = () => {
-  const [tours, setTours] = useState(sampleAssignedTours);
-  const [rejectId, setRejectId] = useState(null);
+  const { currentUser } = useContext(AuthContext); // guide's email
+  const [assignedTours, setAssignedTours] = useState([]);
 
-  const handleAccept = (id) => {
-    setTours((prev) =>
-      prev.map((tour) => (tour.id === id ? { ...tour, status: "accepted" } : tour))
-    );
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/bookings?guideEmail=${currentUser.email}`)
+      .then((res) => res.json())
+      .then((data) => setAssignedTours(data));
+  }, [currentUser.email]);
+
+  const handleAccept = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/bookings/${id}/accept`, {
+        method: "PATCH",
+      });
+      const result = await res.json();
+      if (result.message === "Booking accepted successfully.") {
+        setAssignedTours((prev) =>
+          prev.map((t) => (t._id === id ? { ...t, status: "accepted" } : t))
+        );
+      }
+    } catch (err) {
+      console.error("Accept failed:", err);
+    }
   };
 
-  const handleRejectConfirm = () => {
-    setTours((prev) =>
-      prev.map((tour) => (tour.id === rejectId ? { ...tour, status: "rejected" } : tour))
-    );
-    setRejectId(null);
+  const handleReject = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to reject this tour.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, reject it",
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        const res = await fetch(`http://localhost:3000/api/bookings/${id}/reject`, {
+          method: "PATCH",
+        });
+        const result = await res.json();
+        if (result.message === "Booking rejected successfully.") {
+          setAssignedTours((prev) =>
+            prev.map((t) => (t._id === id ? { ...t, status: "rejected" } : t))
+          );
+        }
+      } catch (err) {
+        console.error("Reject failed:", err);
+      }
+    }
   };
+
+  console.log(assignedTours);
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">My Assigned Tours</h2>
+    <div className="px-6 py-10">
+      <h2 className="text-2xl font-semibold mb-6">My Assigned Tours</h2>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse border">
-          <thead>
+        <table className="min-w-full border border-gray-200">
+          <thead className="">
             <tr>
-              <th className="border px-3 py-2">Package</th>
-              <th className="border px-3 py-2">Tourist</th>
-              <th className="border px-3 py-2">Date</th>
-              <th className="border px-3 py-2">Price</th>
-              <th className="border px-3 py-2">Status</th>
-              <th className="border px-3 py-2">Actions</th>
+              <th className="p-2 border">Package</th>
+              <th className="p-2 border">Tourist</th>
+              <th className="p-2 border">Date</th>
+              <th className="p-2 border">Price</th>
+              <th className="p-2 border">Status</th>
+              <th className="p-2 border">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {tours.map((tour) => (
-              <tr key={tour.id}>
-                <td className="border px-3 py-2">{tour.packageName}</td>
-                <td className="border px-3 py-2">{tour.touristName}</td>
-                <td className="border px-3 py-2">{tour.tourDate}</td>
-                <td className="border px-3 py-2">${tour.price}</td>
-                <td className="border px-3 py-2 capitalize">{tour.status}</td>
-                <td className="border px-3 py-2 space-x-2">
+            {assignedTours.map((tour) => (
+              <tr key={tour._id}>
+                <td className="p-2 border">{tour.packageName}</td>
+                <td className="p-2 border">{tour.touristEmail}</td>
+                <td className="p-2 border">{new Date(tour.tourDate).toLocaleDateString()}</td>
+                <td className="p-2 border">${tour.price}</td>
+                <td className="p-2 border capitalize">{tour.status}</td>
+                <td className="p-2 border flex gap-2">
                   <button
-                    disabled={tour.status !== "in-review"}
-                    onClick={() => handleAccept(tour.id)}
-                    className="px-3 py-1 rounded border disabled:opacity-50"
+                    onClick={() => handleAccept(tour._id)}
+                    disabled={tour.status !== "in review"}
+                    className={`px-3 py-1 rounded  text-white ${
+                      tour.status === "in review"
+                        ? "bg-green-500 hover:bg-green-600 cursor-pointer"
+                        : "bg-gray-300 cursor-not-allowed"
+                    }`}
                   >
                     Accept
                   </button>
-                  <button
-                    disabled={tour.status !== "in-review"}
-                    onClick={() => setRejectId(tour.id)}
-                    className="px-3 py-1 rounded border disabled:opacity-50"
-                  >
-                    Reject
-                  </button>
+                  {tour.status === "in review" && (
+                    <button
+                      onClick={() => handleReject(tour._id)}
+                      className="px-3 py-1 rounded bg-red-500 hover:bg-red-600 cursor-pointer text-white"
+                    >
+                      Reject
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* Reject Confirmation Modal */}
-      {rejectId !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="p-6 rounded-lg bg-white space-y-4 max-w-sm w-full">
-            <h3 className="text-lg font-medium">Confirm Rejection</h3>
-            <p>Are you sure you want to reject this booking?</p>
-            <div className="flex justify-end gap-3 pt-2">
-              <button onClick={() => setRejectId(null)} className="px-4 py-2 border rounded">
-                Cancel
-              </button>
-              <button onClick={handleRejectConfirm} className="px-4 py-2 border rounded">
-                Confirm Reject
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
