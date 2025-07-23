@@ -79,10 +79,12 @@ const TouristMyBookings = () => {
                 <td className="border p-2">${booking.price}</td>
                 <td className="border p-2">
                   {booking.status === "pending"
-                    ? "In Review"
+                    ? "Pending"
                     : booking.status === "cancelled"
                     ? "Cancelled"
-                    : "Accepted"}
+                    : booking.status === "in review"
+                    ? "In Review"
+                    : ""}
                 </td>
                 <td className="border p-2 space-x-2">
                   {booking.status === "pending" && (

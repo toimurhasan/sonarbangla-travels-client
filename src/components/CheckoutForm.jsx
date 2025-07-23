@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { data } from "react-router";
+import { data, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const CheckoutForm = ({ bookingId }) => {
@@ -17,6 +17,7 @@ const CheckoutForm = ({ bookingId }) => {
   //     };
   //     getClientSecret();
   //   }, []);
+  const navigate = useNavigate();
 
   const [price, setPrice] = useState(0);
   useEffect(() => {
@@ -97,6 +98,8 @@ const CheckoutForm = ({ bookingId }) => {
                 text: "Please contact support.",
               });
             }
+            // navigate back
+            navigate("/dashboard/tourist/my-bookings");
           }
         }
       } catch (err) {
