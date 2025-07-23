@@ -5,6 +5,8 @@ import { FaUserTie, FaCalendarAlt } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router";
 import BookingModal from "../components/BookingModal";
 import { AuthContext } from "../contexts/AuthContext";
+import Confetti from "react-confetti";
+import toast, { Toaster } from "react-hot-toast";
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -30,6 +32,7 @@ const PackageDetails = () => {
   console.log(tourGuides);
 
   const [showModal, setShowModal] = useState(false);
+  const [showCongrats, setShowCongrats] = useState(false);
 
   if (isLoading) return <div className="text-center py-20">Loading...</div>;
 
@@ -121,13 +124,39 @@ const PackageDetails = () => {
             guides={tourGuides}
             onClose={() => setShowModal(false)}
             onSubmit={(bookingData) => {
+              // Send bookingData to the server (you can add your fetch/axios here)
               console.log("Send to server:", bookingData);
               setShowModal(false);
-              // Show "Confirm Your Booking" modal or toast
+
+              // Scroll to top
+              window.scrollTo({ top: 0, behavior: "smooth" });
+
+              // Show confetti
+              setShowCongrats(true);
+
+              // hot toast
+              toast.custom((t) => (
+                <div
+                  className={`${
+                    t.visible ? "animate-enter" : "animate-leave"
+                  } text-center  max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto py-4 `}
+                >
+                  <h2 className="text-2xl font-bold text-green-600">🎉 Congratulations!</h2>
+                  <p className="mt-4  text-gray-700">
+                    You’ve booked more than 3 trips! <br /> You’re a true adventurer!
+                  </p>
+                </div>
+              ));
             }}
           />
         )}
       </div>
+      {showCongrats && (
+        <>
+          <Confetti />
+        </>
+      )}
+      <Toaster />
     </>
   );
 };

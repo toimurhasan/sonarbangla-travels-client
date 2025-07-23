@@ -37,7 +37,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
       });
 
       if (res.ok) {
-        onClose();
+        onSubmit();
         Swal.fire({
           title: "Booking Placed Successfully.",
           showConfirmButton: false,
@@ -169,17 +169,6 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
           </div>
         </form>
       </div>
-      {/* {isConfirmOpen && (
-        <dialog id="confirm_modal" className="modal modal-open">
-          <div className="modal-box text-center">
-            <h2 className="text-xl font-semibold text-green-600 mb-4">Confirm your Booking</h2>
-            <p className="mb-6">Your booking has been placed successfully.</p>
-            <a href="/my-bookings" className="btn bg-blue-600 text-white hover:bg-blue-700">
-              Go to My Bookings
-            </a>
-          </div>
-        </dialog>
-      )} */}
     </dialog>
   );
 };
