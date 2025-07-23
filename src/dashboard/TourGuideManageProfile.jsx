@@ -117,26 +117,26 @@ const TourGuideManageProfile = () => {
       {/* Edit Modal */}
       {isEditing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="rounded-lg p-6 w-full max-w-md space-y-4 bg-white relative">
+          <div className="rounded-lg p-6 w-full max-w-md space-y-4 relative">
             <h3 className="text-lg font-semibold">Edit Profile</h3>
             <form className="space-y-3" onSubmit={handleUpdateProfile}>
               <input
                 type="text"
                 defaultValue={currentUser.displayName}
                 readOnly
-                className="w-full border px-3 py-2 rounded bg-gray-100"
+                className="w-full border px-3 py-2 rounded "
               />
               <input
                 type="text"
                 defaultValue={currentUser.photoURL}
                 readOnly
-                className="w-full border px-3 py-2 rounded bg-gray-100"
+                className="w-full border px-3 py-2 rounded "
               />
               <input
                 type="email"
                 value={currentUser.email}
                 readOnly
-                className="w-full border px-3 py-2 rounded bg-gray-100"
+                className="w-full border px-3 py-2 rounded "
               />
               <input
                 type="text"

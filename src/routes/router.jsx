@@ -61,10 +61,6 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Booking & Payment
-  { path: "/payment/:bookingId", element: <div>Payment Page</div> },
-  { path: "/my-bookings", element: <div>My Bookings Page</div> },
-
   {
     path: "dashboard",
     element: <DashboardLayout />,

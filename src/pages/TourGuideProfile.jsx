@@ -40,7 +40,7 @@ const TourGuideProfile = () => {
           <h3 className="text-2xl font-semibold">{name}</h3>
           <p className="text-sm text-gray-600 italic">{location}</p>
           <p>{bio}</p>
-          <p className="text-sm text-gray-500">Expertise: {expertise}</p>
+          <p className="text-sm text-gray-500">Expertise: {expertise || "N/A"}</p>
           <p className="text-sm text-gray-500">Contact: {email}</p>
         </div>
       </div>

@@ -27,7 +27,7 @@ const EditProfileModal = ({ currentUser, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
+      <div className=" rounded-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
         <form onSubmit={handleUpdate} className="space-y-4">
           <div>
@@ -55,17 +55,12 @@ const EditProfileModal = ({ currentUser, onClose }) => {
               type="email"
               value={currentUser.email}
               disabled
-              className="w-full border rounded p-2 bg-gray-100"
+              className="w-full border rounded p-2"
             />
           </div>
           <div>
             <label className="block text-sm font-medium">Role (read-only)</label>
-            <input
-              type="text"
-              value="Admin"
-              disabled
-              className="w-full border rounded p-2 bg-gray-100"
-            />
+            <input type="text" value="Admin" disabled className="w-full border rounded p-2" />
           </div>
 
           {message && <p className="text-sm text-green-600">{message}</p>}

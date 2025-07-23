@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { use, useState } from "react";
 import { FaUserTie, FaCalendarAlt } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import BookingModal from "../components/BookingModal";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -79,7 +79,11 @@ const PackageDetails = () => {
           </h3>
           <ul className="list-disc list-inside space-y-1">
             {tourGuides.map((guide) => (
-              <li key={guide._id}>{guide.name}</li>
+              <li key={guide._id}>
+                <Link to={`/tour-guide/${guide._id}`} className="text-blue-600 hover:underline">
+                  {guide.name}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
