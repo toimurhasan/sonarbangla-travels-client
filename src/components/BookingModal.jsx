@@ -17,9 +17,9 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
 
     const booking = {
       packageName: packageData.tripTitle,
-      touristName: currentUser.name,
+      touristName: currentUser.displayName,
       touristEmail: currentUser.email,
-      touristImage: currentUser.photo,
+      touristImage: currentUser.photoURL,
       price: packageData.price,
       tourDate: selectedDate,
       guide: selectedGuide,

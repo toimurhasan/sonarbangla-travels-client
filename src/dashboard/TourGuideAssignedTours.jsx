@@ -75,7 +75,7 @@ const TourGuideAssignedTours = () => {
             {assignedTours.map((tour) => (
               <tr key={tour._id}>
                 <td className="p-2 border">{tour.packageName}</td>
-                <td className="p-2 border">{tour.touristEmail}</td>
+                <td className="p-2 border">{tour.touristName}</td>
                 <td className="p-2 border">{new Date(tour.tourDate).toLocaleDateString()}</td>
                 <td className="p-2 border">${tour.price}</td>
                 <td className="p-2 border capitalize">{tour.status}</td>

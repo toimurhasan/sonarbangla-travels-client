@@ -27,13 +27,12 @@ const TouristMyBookings = () => {
   const handleCancel = async (bookingId) => {
     try {
       const res = await fetch(`http://localhost:3000/api/bookings/${bookingId}/cancel`, {
-        method: "PATCH",
+        method: "DELETE",
       });
 
       if (res.ok) {
-        setBookings((prev) =>
-          prev.map((b) => (b._id === bookingId ? { ...b, status: "cancelled" } : b))
-        );
+        // Remove the booking from UI
+        setBookings((prev) => prev.filter((b) => b._id !== bookingId));
       } else {
         const errorData = await res.json();
         Swal.fire("Failed", "Failed to cancel booking: " + errorData.error, "error");
@@ -80,8 +79,8 @@ const TouristMyBookings = () => {
                 <td className="border p-2">
                   {booking.status === "pending"
                     ? "Pending"
-                    : booking.status === "cancelled"
-                    ? "Cancelled"
+                    : booking.status === "accepted"
+                    ? "Accepted"
                     : booking.status === "in review"
                     ? "In Review"
                     : ""}
