@@ -7,11 +7,13 @@ import BookingModal from "../components/BookingModal";
 import { AuthContext } from "../contexts/AuthContext";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
+import { useWindowSize } from "react-use";
 
 const PackageDetails = () => {
   const { id } = useParams();
   const { currentUser } = use(AuthContext);
   const navigate = useNavigate();
+  const { width, height } = useWindowSize();
 
   const { data: trip = {}, isLoading } = useQuery({
     queryKey: ["trip", id],
@@ -123,37 +125,50 @@ const PackageDetails = () => {
             packageData={trip}
             guides={tourGuides}
             onClose={() => setShowModal(false)}
-            onSubmit={(bookingData) => {
-              // Send bookingData to the server (you can add your fetch/axios here)
-              console.log("Send to server:", bookingData);
-              setShowModal(false);
+            onSubmit={async (bookingData) => {
+              try {
+                // ✅ Send booking to server
+                console.log("Send to server:", bookingData);
+                setShowModal(false);
 
-              // Scroll to top
-              window.scrollTo({ top: 0, behavior: "smooth" });
+                // ✅ Get booking count for current user
+                const res = await fetch(
+                  `http://localhost:3000/bookings/count?email=${currentUser.email}`
+                );
+                const data = await res.json();
 
-              // Show confetti
-              setShowCongrats(true);
+                if (data.total >= 3) {
+                  // ✅ Scroll to top
+                  window.scrollTo({ top: 0, behavior: "smooth" });
 
-              // hot toast
-              toast.custom((t) => (
-                <div
-                  className={`${
-                    t.visible ? "animate-enter" : "animate-leave"
-                  } text-center  max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto py-4 `}
-                >
-                  <h2 className="text-2xl font-bold text-green-600">🎉 Congratulations!</h2>
-                  <p className="mt-4  text-gray-700">
-                    You’ve booked more than 3 trips! <br /> You’re a true adventurer!
-                  </p>
-                </div>
-              ));
+                  // ✅ Show confetti
+                  setShowCongrats(true);
+                  // setTimeout(() => setShowCongrats(false), 6000);
+
+                  // ✅ Show toast
+                  toast.custom((t) => (
+                    <div
+                      className={`${
+                        t.visible ? "animate-enter" : "animate-leave"
+                      } text-center max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto py-4 px-6`}
+                    >
+                      <h2 className="text-2xl font-bold text-green-600">🎉 Congratulations!</h2>
+                      <p className="mt-4 text-gray-700">
+                        You’ve booked more than 3 trips! <br /> You’re a true adventurer!
+                      </p>
+                    </div>
+                  ));
+                }
+              } catch (error) {
+                console.error("Booking or count error:", error);
+              }
             }}
           />
         )}
       </div>
       {showCongrats && (
         <>
-          <Confetti />
+          <Confetti width={width} height={height} />
         </>
       )}
       <Toaster />
