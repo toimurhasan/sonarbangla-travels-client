@@ -9,7 +9,7 @@ const ManageCandidates = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/applications");
+        const res = await fetch("https://sonarbangla-travels.vercel.app/api/applications");
         const data = await res.json();
         setApplications(data);
         setCurrentPage(1); // reset page on new fetch
@@ -23,9 +23,12 @@ const ManageCandidates = () => {
 
   const handleAccept = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/applications/accept/${id}`, {
-        method: "PATCH",
-      });
+      const res = await fetch(
+        `https://sonarbangla-travels.vercel.app/api/applications/accept/${id}`,
+        {
+          method: "PATCH",
+        }
+      );
 
       if (res.ok) {
         setApplications((prev) => prev.filter((app) => app._id !== id));
@@ -62,9 +65,12 @@ const ManageCandidates = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/applications/reject/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://sonarbangla-travels.vercel.app/api/applications/reject/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (res.ok) {
         setApplications((prev) => prev.filter((app) => app._id !== id));

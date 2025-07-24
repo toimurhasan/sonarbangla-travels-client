@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchBookingPrice = async (bookingId) => {
-  const res = await fetch(`http://localhost:3000/api/booking/${bookingId}`);
+  const res = await fetch(`https://sonarbangla-travels.vercel.app/api/booking/${bookingId}`);
   if (!res.ok) throw new Error("Failed to fetch price");
   const data = await res.json();
   return data.price * 100; // returning the processed price
@@ -21,7 +21,7 @@ const CheckoutForm = ({ bookingId }) => {
   //   useEffect(() => {
   //     const getClientSecret = async () => {
   //       // ...server request
-  //       const { data } = await axios.post("http://localhost:3000/api/create-payment-intent", );
+  //       const { data } = await axios.post("https://sonarbangla-travels.vercel.app/api/create-payment-intent", );
   //     };
   //     getClientSecret();
   //   }, []);
@@ -29,7 +29,7 @@ const CheckoutForm = ({ bookingId }) => {
 
   // const [price, setPrice] = useState(0);
   // useEffect(() => {
-  //   fetch(`http://localhost:3000/api/booking/${bookingId}`)
+  //   fetch(`https://sonarbangla-travels.vercel.app/api/booking/${bookingId}`)
   //     .then((res) => res.json())
   //     .then((data) => setPrice(data.price * 100));
   // }, []);
@@ -66,16 +66,19 @@ const CheckoutForm = ({ bookingId }) => {
     if (price) {
       // Step 1: Create PaymentIntent on your backend
       try {
-        const res = await fetch("http://localhost:3000/api/create-payment-intent", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: price, // amount in cents (i.e., $20.00)
-            currency: "usd", // or "bdt", "eur", etc.
-          }),
-        });
+        const res = await fetch(
+          "https://sonarbangla-travels.vercel.app/api/create-payment-intent",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount: price, // amount in cents (i.e., $20.00)
+              currency: "usd", // or "bdt", "eur", etc.
+            }),
+          }
+        );
 
         const data = await res.json();
         const clientSecret = data.clientSecret;
@@ -102,7 +105,7 @@ const CheckoutForm = ({ bookingId }) => {
 
             // Save payment to DB and update booking status
             try {
-              await axios.post("http://localhost:3000/api/payments", {
+              await axios.post("https://sonarbangla-travels.vercel.app/api/payments", {
                 bookingId: bookingId,
                 amount: result.paymentIntent.amount, // in cents
                 currency: result.paymentIntent.currency,

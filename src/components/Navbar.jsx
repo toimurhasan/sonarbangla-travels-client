@@ -6,7 +6,7 @@ import ThemeSelector from "./ThemeSelector";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchUserRole = async (email) => {
-  const res = await fetch(`http://localhost:3000/api/user-role?email=${email}`);
+  const res = await fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${email}`);
   if (!res.ok) throw new Error("Failed to fetch user role");
   const data = await res.json();
   return data.role;
@@ -26,7 +26,7 @@ const Navbar = () => {
 
   // const [role, setRole] = useState();
   // useEffect(() => {
-  //   fetch(`http://localhost:3000/api/user-role?email=${currentUser?.email}`)
+  //   fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${currentUser?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => setRole(data.role));
   // }, [currentUser]);
@@ -92,7 +92,7 @@ const Navbar = () => {
           <Link to="/">
             <h1 className="cursor-pointer text-xl flex  gap-2">
               <img src="/nav-logo.png" alt="logo" className="object-contain" />
-              <span className="font-semibold">SonarBangla Travels</span>
+              <span className="font-semibold hidden sm:block">SonarBangla Travels</span>
             </h1>
           </Link>
         </div>

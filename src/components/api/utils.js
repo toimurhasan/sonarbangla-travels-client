@@ -3,7 +3,6 @@
 import axios from "axios";
 
 export const saveUserInDB = async (user) => {
-  const { data } = await axios.post("http://localhost:3000/user", user)
-  console.log(data)
-  ;
+  const { data } = await axios.post("https://sonarbangla-travels.vercel.app/user", user);
+  console.log(data);
 };

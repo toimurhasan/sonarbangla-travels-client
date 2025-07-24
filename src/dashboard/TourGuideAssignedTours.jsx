@@ -7,14 +7,14 @@ const TourGuideAssignedTours = () => {
   const [assignedTours, setAssignedTours] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/bookings?guideEmail=${currentUser.email}`)
+    fetch(`https://sonarbangla-travels.vercel.app/api/bookings?guideEmail=${currentUser.email}`)
       .then((res) => res.json())
       .then((data) => setAssignedTours(data));
   }, [currentUser.email]);
 
   const handleAccept = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/bookings/${id}/accept`, {
+      const res = await fetch(`https://sonarbangla-travels.vercel.app/api/bookings/${id}/accept`, {
         method: "PATCH",
       });
       const result = await res.json();
@@ -39,9 +39,12 @@ const TourGuideAssignedTours = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:3000/api/bookings/${id}/reject`, {
-          method: "PATCH",
-        });
+        const res = await fetch(
+          `https://sonarbangla-travels.vercel.app/api/bookings/${id}/reject`,
+          {
+            method: "PATCH",
+          }
+        );
         const result = await res.json();
         if (result.message === "Booking rejected successfully.") {
           setAssignedTours((prev) =>

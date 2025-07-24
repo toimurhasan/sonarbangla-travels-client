@@ -56,7 +56,7 @@ const AddPackage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/packages", {
+      const response = await fetch("https://sonarbangla-travels.vercel.app/api/packages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

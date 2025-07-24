@@ -12,7 +12,7 @@ const TouristMyBookings = () => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/bookings?email=${currentUser.email}`)
+    fetch(`https://sonarbangla-travels.vercel.app/api/bookings?email=${currentUser.email}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("Filtered bookings: ", data);
@@ -26,9 +26,12 @@ const TouristMyBookings = () => {
 
   const handleCancel = async (bookingId) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/bookings/${bookingId}/cancel`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://sonarbangla-travels.vercel.app/api/bookings/${bookingId}/cancel`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (res.ok) {
         // Remove the booking from UI

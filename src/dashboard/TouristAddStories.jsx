@@ -70,7 +70,7 @@ const TouristAddStories = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/api/stories/add-stories", storyData);
+      await axios.post("https://sonarbangla-travels.vercel.app/api/stories/add-stories", storyData);
       Swal.fire({
         icon: "success",
         title: "Your story has been saved!",

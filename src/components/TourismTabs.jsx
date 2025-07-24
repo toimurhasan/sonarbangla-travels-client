@@ -11,7 +11,7 @@ const TourismTabs = () => {
 
   // const [packages, setPackages] = useState([]);
   // useEffect(() => {
-  //   fetch("http://localhost:3000/random-packages")
+  //   fetch("https://sonarbangla-travels.vercel.app/random-packages")
   //     .then((res) => res.json())
   //     .then((data) => setPackages(data))
   //     .catch((err) => console.error("Failed to load packages:", err));
@@ -19,12 +19,12 @@ const TourismTabs = () => {
 
   // const [guides, setGuides] = useState([]);
   // useEffect(() => {
-  //   fetch("http://localhost:3000/api/guides/random")
+  //   fetch("https://sonarbangla-travels.vercel.app/api/guides/random")
   //     .then((res) => res.json())
   //     .then((data) => setGuides(data));
   // }, []);
   const fetchRandomPackages = async () => {
-    const res = await fetch("http://localhost:3000/random-packages");
+    const res = await fetch("https://sonarbangla-travels.vercel.app/random-packages");
     if (!res.ok) throw new Error("Failed to fetch packages");
     return res.json();
   };
@@ -39,7 +39,7 @@ const TourismTabs = () => {
   });
 
   const fetchRandomGuides = async () => {
-    const res = await fetch("http://localhost:3000/api/guides/random");
+    const res = await fetch("https://sonarbangla-travels.vercel.app/api/guides/random");
     if (!res.ok) throw new Error("Failed to fetch guides");
     return res.json();
   };

@@ -18,7 +18,7 @@ const PackageDetails = () => {
   const { data: trip = {}, isLoading } = useQuery({
     queryKey: ["trip", id],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/api/packages/${id}`);
+      const res = await fetch(`https://sonarbangla-travels.vercel.app/api/packages/${id}`);
       return res.json();
     },
   });
@@ -26,7 +26,7 @@ const PackageDetails = () => {
   const { data: tourGuides = [] } = useQuery({
     queryKey: ["tourGuides"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/users/tour-guides");
+      const res = await fetch("https://sonarbangla-travels.vercel.app/api/users/tour-guides");
       return res.json();
     },
   });
@@ -133,7 +133,7 @@ const PackageDetails = () => {
 
                 // ✅ Get booking count for current user
                 const res = await fetch(
-                  `http://localhost:3000/bookings/count?email=${currentUser.email}`
+                  `https://sonarbangla-travels.vercel.app/bookings/count?email=${currentUser.email}`
                 );
                 const data = await res.json();
 

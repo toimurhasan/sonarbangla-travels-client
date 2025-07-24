@@ -17,7 +17,7 @@ const TourGuideManageProfile = () => {
     enabled: !!currentUser?.email,
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:3000/api/guides/profile?email=${currentUser.email}`
+        `https://sonarbangla-travels.vercel.app/api/guides/profile?email=${currentUser.email}`
       );
       if (!res.ok) throw new Error("Failed to fetch guide profile");
       return res.json();
@@ -44,7 +44,7 @@ const TourGuideManageProfile = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/api/guides/profile", {
+      const res = await fetch("https://sonarbangla-travels.vercel.app/api/guides/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProfile),

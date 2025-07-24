@@ -13,7 +13,7 @@ const TouristManageStories = () => {
     async function fetchStories() {
       try {
         const res = await fetch(
-          `http://localhost:3000/api/stories/user?email=${currentUser.email}`
+          `https://sonarbangla-travels.vercel.app/api/stories/user?email=${currentUser.email}`
         );
         const data = await res.json();
         setStories(data);
@@ -36,7 +36,7 @@ const TouristManageStories = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await fetch(`http://localhost:3000/api/stories/${storyId}`, {
+          const res = await fetch(`https://sonarbangla-travels.vercel.app/api/stories/${storyId}`, {
             method: "DELETE",
           });
 

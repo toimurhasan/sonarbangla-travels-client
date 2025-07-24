@@ -5,7 +5,7 @@ const AllTrips = () => {
   const navigate = useNavigate();
   const [packages, setPackages] = useState();
   useEffect(() => {
-    fetch("http://localhost:3000/api/packages")
+    fetch("https://sonarbangla-travels.vercel.app/api/packages")
       .then((res) => res.json())
       .then((data) => setPackages(data));
   }, []);

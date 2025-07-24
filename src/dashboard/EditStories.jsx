@@ -9,18 +9,21 @@ const EditStories = () => {
   const [newImages, setNewImages] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/stories/${storyId}`)
+    fetch(`https://sonarbangla-travels.vercel.app/api/stories/${storyId}`)
       .then((res) => res.json())
       .then((data) => setStory(data))
       .catch((err) => console.error("Error loading story:", err));
   }, [storyId]);
 
   const handleRemoveImage = async (imageUrl) => {
-    const res = await fetch(`http://localhost:3000/api/stories/remove-image/${storyId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ imageUrl }),
-    });
+    const res = await fetch(
+      `https://sonarbangla-travels.vercel.app/api/stories/remove-image/${storyId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl }),
+      }
+    );
 
     const data = await res.json();
 
@@ -43,11 +46,14 @@ const EditStories = () => {
   };
 
   const handleAddImages = async () => {
-    const res = await fetch(`http://localhost:3000/api/stories/add-images/${storyId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ images: newImages }), // replace with uploaded URLs
-    });
+    const res = await fetch(
+      `https://sonarbangla-travels.vercel.app/api/stories/add-images/${storyId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ images: newImages }), // replace with uploaded URLs
+      }
+    );
 
     const data = await res.json();
 

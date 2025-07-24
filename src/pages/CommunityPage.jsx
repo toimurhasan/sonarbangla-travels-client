@@ -8,7 +8,7 @@ const CommunityPage = () => {
   const currentPageURL = window.location.href;
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/stories/all-stories")
+    fetch("https://sonarbangla-travels.vercel.app/api/stories/all-stories")
       .then((res) => res.json())
       .then((data) => setStories(data));
   }, []);

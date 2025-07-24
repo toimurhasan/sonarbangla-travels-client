@@ -5,7 +5,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchRandomStories = async () => {
-  const res = await fetch("http://localhost:3000/api/stories/random");
+  const res = await fetch("https://sonarbangla-travels.vercel.app/api/stories/random");
   if (!res.ok) throw new Error("Failed to fetch stories");
   return res.json();
 };
@@ -51,7 +51,7 @@ const TouristStorySection = () => {
 
   // const [stories, setStories] = useState();
   // useEffect(() => {
-  //   fetch("http://localhost:3000/api/stories/random")
+  //   fetch("https://sonarbangla-travels.vercel.app/api/stories/random")
   //     .then((res) => res.json())
   //     .then((data) => setStories(data));
   // }, []);

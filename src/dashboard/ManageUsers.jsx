@@ -25,7 +25,7 @@ const ManageUsers = () => {
           role: selectedRole.value,
         }).toString();
 
-        const res = await fetch(`http://localhost:3000/api/users?${query}`);
+        const res = await fetch(`https://sonarbangla-travels.vercel.app/api/users?${query}`);
         const data = await res.json();
         setUsers(data);
         setCurrentPage(1); // reset to first page on new search/filter

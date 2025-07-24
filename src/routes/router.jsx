@@ -46,11 +46,15 @@ const router = createBrowserRouter([
       {
         path: "/tour-guide/:id",
         loader: async ({ params }) => {
-          const guideRes = await fetch(`http://localhost:3000/api/guides/${params.id}`);
+          const guideRes = await fetch(
+            `https://sonarbangla-travels.vercel.app/api/guides/${params.id}`
+          );
           const guide = await guideRes.json();
 
           const storyRes = await fetch(
-            `http://localhost:3000/api/stories/user?email=${encodeURIComponent(guide.email)}`
+            `https://sonarbangla-travels.vercel.app/api/stories/user?email=${encodeURIComponent(
+              guide.email
+            )}`
           );
           const stories = await storyRes.json();
 
@@ -62,7 +66,7 @@ const router = createBrowserRouter([
       {
         path: "/story/:id",
         loader: ({ params }) => {
-          return fetch(`http://localhost:3000/api/story/${params.id}`);
+          return fetch(`https://sonarbangla-travels.vercel.app/api/story/${params.id}`);
         },
         element: <Story></Story>,
       },

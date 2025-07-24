@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   const [role, setRole] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/user-role?email=${currentUser.email}`)
+    fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${currentUser.email}`)
       .then((res) => res.json())
       .then((data) => setRole(data.role));
   }, []);

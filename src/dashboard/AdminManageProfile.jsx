@@ -12,7 +12,9 @@ const AdminManageProfile = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/stats").then((res) => setStats(res.data));
+    axios
+      .get("https://sonarbangla-travels.vercel.app/api/admin/stats")
+      .then((res) => setStats(res.data));
   }, []);
 
   return (

@@ -27,7 +27,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/bookings", {
+      const res = await fetch("https://sonarbangla-travels.vercel.app/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
