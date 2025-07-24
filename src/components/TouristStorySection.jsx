@@ -2,6 +2,13 @@ import { FacebookShareButton, FacebookIcon } from "react-share";
 import { useNavigate } from "react-router";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchRandomStories = async () => {
+  const res = await fetch("http://localhost:3000/api/stories/random");
+  if (!res.ok) throw new Error("Failed to fetch stories");
+  return res.json();
+};
 
 const TouristStorySection = () => {
   const navigate = useNavigate();
@@ -42,13 +49,21 @@ const TouristStorySection = () => {
   //   },
   // ];
 
-  const [stories, setStories] = useState();
+  // const [stories, setStories] = useState();
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/api/stories/random")
+  //     .then((res) => res.json())
+  //     .then((data) => setStories(data));
+  // }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/stories/random")
-      .then((res) => res.json())
-      .then((data) => setStories(data));
-  }, []);
+  const {
+    data: stories = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["randomStories"],
+    queryFn: fetchRandomStories,
+  });
 
   const handleShare = (url) => {
     if (!currentUser) {
