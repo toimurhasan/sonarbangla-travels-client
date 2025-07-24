@@ -3,26 +3,55 @@ import { Link, useNavigate } from "react-router";
 // import { useLocation } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { useQuery } from "@tanstack/react-query";
 
 const TourismTabs = () => {
-  const [packages, setPackages] = useState([]);
   // const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:3000/random-packages")
-      .then((res) => res.json())
-      .then((data) => setPackages(data))
-      .catch((err) => console.error("Failed to load packages:", err));
-  }, []);
+  // const [packages, setPackages] = useState([]);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/random-packages")
+  //     .then((res) => res.json())
+  //     .then((data) => setPackages(data))
+  //     .catch((err) => console.error("Failed to load packages:", err));
+  // }, []);
 
-  const [guides, setGuides] = useState([]);
+  // const [guides, setGuides] = useState([]);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/api/guides/random")
+  //     .then((res) => res.json())
+  //     .then((data) => setGuides(data));
+  // }, []);
+  const fetchRandomPackages = async () => {
+    const res = await fetch("http://localhost:3000/random-packages");
+    if (!res.ok) throw new Error("Failed to fetch packages");
+    return res.json();
+  };
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/guides/random")
-      .then((res) => res.json())
-      .then((data) => setGuides(data));
-  }, []);
+  const {
+    data: packages = [],
+    isLoading: loadingPackages,
+    error: packagesError,
+  } = useQuery({
+    queryKey: ["randomPackages"],
+    queryFn: fetchRandomPackages,
+  });
+
+  const fetchRandomGuides = async () => {
+    const res = await fetch("http://localhost:3000/api/guides/random");
+    if (!res.ok) throw new Error("Failed to fetch guides");
+    return res.json();
+  };
+
+  const {
+    data: guides = [],
+    isLoading: loadingGuides,
+    error: guidesError,
+  } = useQuery({
+    queryKey: ["randomGuides"],
+    queryFn: fetchRandomGuides,
+  });
 
   return (
     <section className="py-12 px-4 md:px-8 lg:px-16">
