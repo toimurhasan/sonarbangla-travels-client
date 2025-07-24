@@ -3,6 +3,14 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 // import ThemeToggleButton from "./ThemeToggleButton";
 import ThemeSelector from "./ThemeSelector";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchUserRole = async (email) => {
+  const res = await fetch(`http://localhost:3000/api/user-role?email=${email}`);
+  if (!res.ok) throw new Error("Failed to fetch user role");
+  const data = await res.json();
+  return data.role;
+};
 
 const Navbar = () => {
   const { currentUser, signOutUser } = use(AuthContext);
@@ -16,13 +24,20 @@ const Navbar = () => {
       });
   };
 
-  const [role, setRole] = useState();
+  // const [role, setRole] = useState();
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/api/user-role?email=${currentUser?.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setRole(data.role));
+  // }, [currentUser]);
 
-  useEffect(() => {
-    fetch(`http://localhost:3000/api/user-role?email=${currentUser?.email}`)
-      .then((res) => res.json())
-      .then((data) => setRole(data.role));
-  }, [currentUser]);
+  const { data: role } = useQuery({
+    queryKey: ["userRole", currentUser?.email],
+    queryFn: () => fetchUserRole(currentUser.email),
+    enabled: !!currentUser?.email, // avoids running if email is not ready
+  });
+
+  // if (isLoading) return <div>Loading...</div>;
 
   const links = (
     <>
