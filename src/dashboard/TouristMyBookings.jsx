@@ -15,7 +15,7 @@ const TouristMyBookings = () => {
     fetch(`http://localhost:3000/api/bookings?email=${currentUser.email}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Filtered bookings: ", data);
+        // console.log("Filtered bookings: ", data);
         setBookings(data);
       });
   }, [currentUser.email]);

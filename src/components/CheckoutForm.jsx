@@ -3,6 +3,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { data, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchBookingPrice = async (bookingId) => {
+  const res = await fetch(`http://localhost:3000/api/booking/${bookingId}`);
+  if (!res.ok) throw new Error("Failed to fetch price");
+  const data = await res.json();
+  return data.price * 100; // returning the processed price
+};
 
 const CheckoutForm = ({ bookingId }) => {
   const stripe = useStripe();
@@ -19,12 +27,25 @@ const CheckoutForm = ({ bookingId }) => {
   //   }, []);
   const navigate = useNavigate();
 
-  const [price, setPrice] = useState(0);
-  useEffect(() => {
-    fetch(`http://localhost:3000/api/booking/${bookingId}`)
-      .then((res) => res.json())
-      .then((data) => setPrice(data.price * 100));
-  }, []);
+  // const [price, setPrice] = useState(0);
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/api/booking/${bookingId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setPrice(data.price * 100));
+  // }, []);
+
+  const {
+    data: price = 0,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["bookingPrice", bookingId],
+    queryFn: () => fetchBookingPrice(bookingId),
+    enabled: !!bookingId, // only run if bookingId is truthy
+  });
+
+  if (isLoading) return <div>Loading Price...</div>;
+  if (error) return <div>Error loading price</div>;
 
   // console.log(typeof price);
   const handleSubmit = async (event) => {
