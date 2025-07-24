@@ -77,7 +77,7 @@ const EditStories = () => {
               <img src={img} alt={`img-${index}`} className="w-full h-32 object-cover rounded" />
               <button
                 onClick={() => handleRemoveImage(img)}
-                className="absolute top-1 right-1 bg-red-500 text-white px-2 py-1 text-xs rounded"
+                className="absolute top-1 right-1 bg-red-500 cursor-pointer text-white px-2 py-1 text-xs rounded"
               >
                 Remove
               </button>
@@ -96,7 +96,10 @@ const EditStories = () => {
         />
         {newImages.length > 0 && (
           <div className="mt-2">
-            <button onClick={handleAddImages} className="bg-green-600 text-white px-4 py-2 rounded">
+            <button
+              onClick={handleAddImages}
+              className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded"
+            >
               Upload New Images
             </button>
           </div>
