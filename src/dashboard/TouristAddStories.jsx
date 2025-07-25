@@ -128,14 +128,15 @@ const TouristAddStories = () => {
             <input
               type="file"
               className="file-input"
-              multiple
               accept="image/*"
               onChange={handleImageChange}
               disabled={uploading}
             />
             <label className="label">Max size 2MB</label>
           </fieldset>
-          {uploading && <p className="text-sm text-blue-500">Uploading...</p>}
+          {uploading && (
+            <p className="text-sm text-blue-500">Uploading...might take a few minutes...</p>
+          )}
           {images.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2">
               {images.map((imgUrl, index) => (

@@ -7,6 +7,7 @@ const EditStories = () => {
   //   console.log(storyId);
   const [story, setStory] = useState(null);
   const [newImages, setNewImages] = useState([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetch(`https://sonarbangla-travels.vercel.app/api/stories/${storyId}`)
@@ -38,11 +39,40 @@ const EditStories = () => {
     }
   };
 
-  const handleNewImagesChange = (e) => {
+  const handleNewImagesChange = async (e) => {
     const files = Array.from(e.target.files);
-    const urls = files.map((file) => URL.createObjectURL(file));
-    setNewImages(urls); // for preview only
-    // You should upload to an image host here and get actual URLs before submitting
+    const uploadedImageUrls = [];
+    setUploading(true);
+    for (let file of files) {
+      const imgFormData = new FormData();
+      imgFormData.append("image", file);
+
+      try {
+        const res = await fetch(
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+          {
+            method: "POST",
+            body: imgFormData,
+          }
+        );
+        const data = await res.json();
+        if (data.success) {
+          uploadedImageUrls.push(data.data.display_url);
+        }
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Image upload failed",
+          text: "Please try again.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
+
+    setNewImages(uploadedImageUrls);
+    setUploading(false);
   };
 
   const handleAddImages = async () => {
@@ -96,10 +126,14 @@ const EditStories = () => {
         <h3 className="font-medium mt-4">Add New Images:</h3>
         <input
           type="file"
-          multiple
           onChange={handleNewImagesChange}
           className="border rounded p-1 cursor-pointer"
         />
+        {uploading && (
+          <p className="text-sm text-blue-600 font-medium mt-1">
+            Creating link with imgbb...please wait
+          </p>
+        )}
         {newImages.length > 0 && (
           <div className="mt-2">
             <button

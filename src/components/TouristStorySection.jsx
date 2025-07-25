@@ -75,16 +75,16 @@ const TouristStorySection = () => {
     <section className="py-12  px-4 md:px-8 lg:px-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Tourist Stories</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 ">
         {stories?.map((story) => (
           <div
             key={story._id}
-            className=" shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row"
+            className=" shadow-md px-6 rounded-2xl overflow-hidden flex flex-col items-center md:flex-row"
           >
             <img
               src={story.images[0]}
               alt={story.title}
-              className="w-full md:w-1/3 h-48 object-cover"
+              className="w-full rounded-2xl md:w-1/3 h-48 object-cover"
             />
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
