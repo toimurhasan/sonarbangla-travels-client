@@ -83,9 +83,9 @@ const TourismTabs = () => {
               >
                 <img src={pkg.image} alt={pkg.tripTitle} className="w-full h-48 object-cover" />
                 <div className="p-4">
-                  <p className="text-sm text-gray-500">{pkg.tourType}</p>
-                  <h3 className="text-xl font-semibold mb-2">{pkg.tripTitle}</h3>
-                  <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}TK</p>
+                  <p className="text-sm text-gray-500">{pkg.type}</p>
+                  <h3 className="text-xl font-semibold mb-2">{pkg.title}</h3>
+                  <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}USD</p>
                   <button
                     className="btn-primary btn px-4 py-2 rounded transition"
                     onClick={() => {
@@ -108,9 +108,9 @@ const TourismTabs = () => {
               <div key={guide._id} className="card bg-base-100 shadow-xl">
                 <figure>
                   <img
-                    src={guide.photo}
+                    src={guide.image}
                     alt={guide.name}
-                    className=" h-56 rounded-full object-cover"
+                    className=" h-56 w-56 rounded-full object-cover"
                   />
                 </figure>
                 <div className="card-body">

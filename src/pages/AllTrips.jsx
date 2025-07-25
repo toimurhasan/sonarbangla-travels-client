@@ -19,7 +19,7 @@ const AllTrips = () => {
           <div key={index} className="border border-base-300 rounded-lg shadow-md overflow-hidden">
             <img src={pkg.image} alt={pkg.title} className="w-full h-48 object-cover" />
             <div className="p-4">
-              <p className="text-sm text-gray-500">{pkg.tourType}</p>
+              <p className="text-sm text-gray-500">{pkg.type}</p>
               <h3 className="text-xl font-semibold mb-2">{pkg.title}</h3>
               <p className="text-green-600 font-bold text-lg mb-4">{pkg.price}TK</p>
               <button

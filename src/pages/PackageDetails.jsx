@@ -71,7 +71,7 @@ const PackageDetails = () => {
             {tourPlan.map((plan, index) => (
               <div key={index} className="bg-base-200 p-4 rounded-lg shadow">
                 <h4 className="font-bold">
-                  {plan.day}: {plan.title}
+                  {plan.day}: {plan.activities}
                 </h4>
                 <p className="text-sm  mt-1">{plan.description}</p>
               </div>
@@ -98,7 +98,7 @@ const PackageDetails = () => {
         {/* Price & Booking CTA */}
         <div className="mt-10 flex items-center justify-between bg-base-200 p-6 rounded-xl shadow">
           <div>
-            <p className="text-xl font-bold text-primary">Price: {price}TK</p>
+            <p className="text-xl font-bold text-primary">Price: {price}USD</p>
           </div>
           {currentUser ? (
             <button

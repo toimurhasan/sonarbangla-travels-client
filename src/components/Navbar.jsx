@@ -24,7 +24,7 @@ const Navbar = () => {
       });
   };
 
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState();
   useEffect(() => {
     fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${currentUser?.email}`)
       .then((res) => res.json())

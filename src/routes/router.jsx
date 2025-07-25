@@ -27,6 +27,7 @@ import ForgetPassword from "../pages/ForgetPassword";
 import Story from "../pages/Story";
 import EditStories from "../dashboard/EditStories";
 import Payment from "../pages/Payment";
+import RedirectToHome from "../components/RedirectToHome";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -77,6 +78,9 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <DashboardLayout />,
     children: [
+      // undefined
+      { path: "undefined", element: <RedirectToHome></RedirectToHome> },
+
       // Tourist
       { path: "tourist", element: <TouristManageProfile></TouristManageProfile> },
       { path: "tourist/manage-profile", element: <TouristManageProfile></TouristManageProfile> },

@@ -16,7 +16,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
     e.preventDefault();
 
     const booking = {
-      packageName: packageData.tripTitle,
+      packageName: packageData.title,
       touristName: currentUser.displayName,
       touristEmail: currentUser.email,
       touristImage: currentUser.photoURL,
@@ -80,7 +80,7 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
             <label className="label">Package Name</label>
             <input
               type="text"
-              value={packageData.tripTitle}
+              value={packageData.title}
               className="input input-bordered w-full"
               readOnly
             />

@@ -31,12 +31,12 @@ const Register = () => {
       .then(() => {
         updateUserInfo(name, photo)
           .then(() => {
+            // <-- Add reload here to refresh user info after update
             saveUserInDB({
               name,
               email,
               image: photo,
             });
-            // toast.success("Register Successful");
             Swal.fire({
               icon: "success",
               title: "Register Successful",
@@ -44,6 +44,7 @@ const Register = () => {
               timer: 1500,
             });
             navigate(location?.state || "/");
+            window.location.reload();
           })
           .catch((error) => {
             const errorCode = error.code;

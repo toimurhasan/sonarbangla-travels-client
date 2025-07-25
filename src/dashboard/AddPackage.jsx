@@ -96,6 +96,7 @@ const AddPackage = () => {
       <h2 className="text-xl font-semibold mb-4">Add New Tour Package</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <input
+          required
           name="title"
           type="text"
           placeholder="Package Title"
@@ -105,18 +106,19 @@ const AddPackage = () => {
         />
 
         <select
+          required
           name="type"
           value={formData.type}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
         >
-          <option value="">Select Tour Type</option>
           <option value="Adventure">Adventure</option>
           <option value="Relaxation">Relaxation</option>
           <option value="Eco-tour">Eco-tour</option>
         </select>
 
         <input
+          required
           name="price"
           type="number"
           placeholder="Price (USD)"
@@ -126,6 +128,7 @@ const AddPackage = () => {
         />
 
         <input
+          required
           name="image"
           type="text"
           placeholder="Thumbnail Image URL"
