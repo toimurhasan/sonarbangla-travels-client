@@ -57,7 +57,7 @@ const TourGuideAssignedTours = () => {
     }
   };
 
-  console.log(assignedTours);
+  // console.log(assignedTours);
 
   return (
     <div className="px-6 py-10">

@@ -4,7 +4,7 @@ const AboutUs = () => {
     bio: `I'm a passionate full-stack web developer who loves solving real-world problems 
     through clean and efficient code. I enjoy teaching, building products, and helping 
     others grow in tech.`,
-    projectsCount: 5,
+    projectsCount: 3,
     profileImage: "https://avatars.githubusercontent.com/u/87655746?v=4", // Optional
     links: [
       {
@@ -39,6 +39,16 @@ const AboutUs = () => {
           <h3 className="text-2xl font-semibold">{developer.name}</h3>
           <p className="">{developer.bio}</p>
           <p className="font-medium">Projects Built: {developer.projectsCount}</p>
+
+          <div className="flex gap-2 ">
+            <h3 className="font-semibold">Projects Links:</h3>
+            <a className="link" target="_blank" href="https://hobbyhub-tamim.web.app/">
+              HobbyHub
+            </a>
+            <a className="link" target="_blank" href="https://peersolve.web.app/">
+              PeerSolve
+            </a>
+          </div>
 
           {/* Links */}
           <div className="flex flex-wrap gap-3 justify-center md:justify-start">

@@ -23,7 +23,7 @@ const AdminManageProfile = () => {
 
       {/* Stats Panel */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard title="Total Payment" value={`$${stats.totalPayment || 0}`} />
+        <StatCard title="Total Payment" value={`$${stats.totalPayment / 100 || 0}`} />
         <StatCard title="Total Tour Guides" value={stats.totalGuides || 0} />
         <StatCard title="Total Packages" value={stats.totalPackages || 0} />
         <StatCard title="Total Clients" value={stats.totalClients || 0} />

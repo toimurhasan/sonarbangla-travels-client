@@ -86,6 +86,8 @@ const TouristMyBookings = () => {
                     ? "Accepted"
                     : booking.status === "in review"
                     ? "In Review"
+                    : booking.status === "rejected"
+                    ? "Rejected"
                     : ""}
                 </td>
                 <td className="border p-2 space-x-2">

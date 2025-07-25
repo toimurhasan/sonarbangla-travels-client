@@ -3,6 +3,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
+import { checkIfGuide } from "./api/utils";
+import toast from "react-hot-toast";
+// import CheckIfGuide from "./CheckIfGuide";
 // import { useAuth } from "../hooks/useAuth"; // customize this hook based on your auth context
 
 const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
@@ -14,6 +17,13 @@ const BookingModal = ({ packageData, guides, onClose, onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (checkIfGuide(currentUser.email)) {
+      return toast.error(
+        "Cannot book trip from a Tour Guide account. Please create a tourist account."
+      );
+    }
+    // return console.log(CheckIfGuide(currentUser));
 
     const booking = {
       packageName: packageData.title,

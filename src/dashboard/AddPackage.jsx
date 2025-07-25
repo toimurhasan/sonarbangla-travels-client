@@ -104,8 +104,9 @@ const AddPackage = () => {
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
         />
-
+        <label htmlFor="select-type">Select Your Tour Type:</label>
         <select
+          id="select-type"
           required
           name="type"
           value={formData.type}

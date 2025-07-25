@@ -40,7 +40,7 @@ const DashboardLayout = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar lg:hidden bg-base-300 w-full">
+        <div className="navbar sm:hidden bg-base-300 w-full">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -68,7 +68,10 @@ const DashboardLayout = () => {
         <div className="flex">
           {/* Sidebar */}
           <aside className="w-64 fixed bg-gray-800 text-white  p-4 hidden sm:block">
-            <div className="text-2xl font-bold mb-6">S.B.T. Dashboard</div>
+            <div className="text-2xl flex items-center gap-2 font-bold mb-6">
+              <img src="/nav-logo.png" alt="logo" />
+              <p>Dashboard</p>
+            </div>
             {/* Add navigation links here based on role (optional) */}
             {/* Example: <Link to="/dashboard/tourist/my-bookings">My Bookings</Link> */}
             <SidebarNav userRole={role} />

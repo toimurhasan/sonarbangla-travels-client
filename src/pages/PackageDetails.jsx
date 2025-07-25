@@ -31,7 +31,7 @@ const PackageDetails = () => {
     },
   });
 
-  console.log(tourGuides);
+  // console.log(tourGuides);
 
   const [showModal, setShowModal] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
@@ -63,7 +63,7 @@ const PackageDetails = () => {
         <p className="text-center mb-6">{description}</p>
 
         {/* Tour Plan */}
-        <div className="mb-8">
+        <div className="my-8">
           <h3 className="text-2xl font-semibold mb-3 flex items-center gap-2">
             <FaCalendarAlt className="text-primary" /> Tour Plan
           </h3>

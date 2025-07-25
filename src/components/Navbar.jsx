@@ -26,9 +26,11 @@ const Navbar = () => {
 
   const [role, setRole] = useState();
   useEffect(() => {
-    fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${currentUser?.email}`)
-      .then((res) => res.json())
-      .then((data) => setRole(data.role));
+    if (currentUser) {
+      fetch(`https://sonarbangla-travels.vercel.app/api/user-role?email=${currentUser?.email}`)
+        .then((res) => res.json())
+        .then((data) => setRole(data.role));
+    }
   }, [currentUser]);
 
   // const { data: role } = useQuery({
