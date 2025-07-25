@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 const AddPackage = () => {
   const [formData, setFormData] = useState({
     title: "",
-    type: "",
+    type: "Adventure", // ✅ Default set here
     price: "",
     image: "",
     images: [""],
@@ -107,7 +107,6 @@ const AddPackage = () => {
         <label htmlFor="select-type">Select Your Tour Type:</label>
         <select
           id="select-type"
-          required
           name="type"
           value={formData.type}
           onChange={handleChange}
@@ -143,6 +142,7 @@ const AddPackage = () => {
           {formData.images.map((img, idx) => (
             <div key={idx} className="flex gap-2 mb-2">
               <input
+                required
                 type="text"
                 value={img}
                 onChange={(e) => handleImageChange(idx, e.target.value)}
@@ -168,6 +168,7 @@ const AddPackage = () => {
         </div>
 
         <textarea
+          required
           name="description"
           rows="4"
           placeholder="Tour Description"
@@ -181,6 +182,7 @@ const AddPackage = () => {
           {formData.tourPlan.map((item, idx) => (
             <div key={idx} className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center mb-2">
               <input
+                required
                 type="text"
                 placeholder="Day (e.g., Day 1)"
                 value={item.day}
@@ -188,6 +190,7 @@ const AddPackage = () => {
                 className="border px-3 py-2 rounded"
               />
               <input
+                required
                 type="text"
                 placeholder="Activities"
                 value={item.activities}
