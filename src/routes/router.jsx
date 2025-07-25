@@ -28,6 +28,7 @@ import Story from "../pages/Story";
 import EditStories from "../dashboard/EditStories";
 import Payment from "../pages/Payment";
 import RedirectToHome from "../components/RedirectToHome";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -82,28 +83,154 @@ const router = createBrowserRouter([
       { path: "undefined", element: <RedirectToHome></RedirectToHome> },
 
       // Tourist
-      { path: "tourist", element: <TouristManageProfile></TouristManageProfile> },
-      { path: "tourist/manage-profile", element: <TouristManageProfile></TouristManageProfile> },
-      { path: "tourist/my-bookings", element: <TouristMyBookings /> },
-      { path: "add-story", element: <TouristAddStories></TouristAddStories> },
-      { path: "manage-stories", element: <TouristManageStories></TouristManageStories> },
-      { path: "tourist/stories/edit/:storyId", element: <EditStories></EditStories> },
-      { path: "tourist/join-tour-guide", element: <TouristJoinTourGuide></TouristJoinTourGuide> },
-      { path: "tourist/payment/:bookingId", element: <Payment></Payment> },
+      {
+        path: "tourist",
+        element: (
+          <PrivateRoute>
+            <TouristManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourist/manage-profile",
+        element: (
+          <PrivateRoute>
+            <TouristManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourist/my-bookings",
+        element: (
+          <PrivateRoute>
+            <TouristMyBookings />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-story",
+        element: (
+          <PrivateRoute>
+            <TouristAddStories />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-stories",
+        element: (
+          <PrivateRoute>
+            <TouristManageStories />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourist/stories/edit/:storyId",
+        element: (
+          <PrivateRoute>
+            <EditStories />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourist/join-tour-guide",
+        element: (
+          <PrivateRoute>
+            <TouristJoinTourGuide />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourist/payment/:bookingId",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+      },
 
       // Tour Guide
-      { path: "tourguide", element: <TourGuideManageProfile /> },
-      { path: "tourguide/manage-profile", element: <TourGuideManageProfile /> },
-      { path: "tourguide/assigned-tours", element: <TourGuideAssignedTours /> },
-      { path: "add-story", element: <TouristAddStories></TouristAddStories> },
-      { path: "manage-stories", element: <TouristManageStories /> },
+      {
+        path: "tourguide",
+        element: (
+          <PrivateRoute>
+            <TourGuideManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourguide/manage-profile",
+        element: (
+          <PrivateRoute>
+            <TourGuideManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tourguide/assigned-tours",
+        element: (
+          <PrivateRoute>
+            <TourGuideAssignedTours />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-story",
+        element: (
+          <PrivateRoute>
+            <TouristAddStories />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-stories",
+        element: (
+          <PrivateRoute>
+            <TouristManageStories />
+          </PrivateRoute>
+        ),
+      },
 
       // Admin
-      { path: "admin", element: <AdminManageProfile /> },
-      { path: "admin/manage-profile", element: <AdminManageProfile /> },
-      { path: "admin/add-package", element: <AddPackage></AddPackage> },
-      { path: "admin/manage-users", element: <ManageUsers></ManageUsers> },
-      { path: "admin/manage-candidates", element: <ManageCandidates /> },
+      {
+        path: "admin",
+        element: (
+          <PrivateRoute>
+            <AdminManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin/manage-profile",
+        element: (
+          <PrivateRoute>
+            <AdminManageProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin/add-package",
+        element: (
+          <PrivateRoute>
+            <AddPackage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin/manage-users",
+        element: (
+          <PrivateRoute>
+            <ManageUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin/manage-candidates",
+        element: (
+          <PrivateRoute>
+            <ManageCandidates />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
