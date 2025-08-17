@@ -6,6 +6,7 @@ import TouristStorySection from "../components/TouristStorySection";
 import WhyTravelWithUs from "../components/WhyTravelWithUs";
 import PopularDestinations from "../components/PopularDestinations";
 import TestimonialSection from "../components/TestimonialSection";
+import NewsletterSection from "../components/NewsletterSection";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <PopularDestinations />
       <TestimonialSection />
       <WhyTravelWithUs />
+      <NewsletterSection />
     </div>
   );
 };

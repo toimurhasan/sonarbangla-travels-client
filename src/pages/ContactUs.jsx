@@ -15,9 +15,9 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col items-center justify-center py-8 px-4">
+    <div className="min-h-screen  flex flex-col items-center justify-center py-8 px-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-blue-700 mb-4 text-center">Contact Us</h2>
+        <h2 className="text-3xl font-bold  mb-4 text-center">Contact Us</h2>
         <p className="text-gray-600 mb-8 text-center">
           We'd love to hear from you! Fill out the form below or reach us directly.
         </p>
@@ -69,29 +69,26 @@ const ContactUs = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-            >
+            <button type="submit" className="btn btn-primary w-full">
               Send Message
             </button>
           </form>
         )}
         <div className="mt-10 border-t pt-6">
-          <h3 className="text-xl font-semibold text-blue-700 mb-2">Contact Details</h3>
-          <p className="text-gray-700 mb-1">
+          <h3 className="text-xl font-semibold  mb-2">Contact Details</h3>
+          <p className=" mb-1">
             Email:{" "}
-            <a href="mailto:info@sonarbanglatravels.com" className="text-blue-600 hover:underline">
+            <a href="mailto:info@sonarbanglatravels.com" className=" hover:underline">
               info@sonarbanglatravels.com
             </a>
           </p>
-          <p className="text-gray-700 mb-1">
+          <p className=" mb-1">
             Phone:{" "}
-            <a href="tel:+880123456789" className="text-blue-600 hover:underline">
+            <a href="tel:+880123456789" className=" hover:underline">
               +880 1234 56789
             </a>
           </p>
-          <p className="text-gray-700">Address: 123, Sonar Bangla Road, Dhaka, Bangladesh</p>
+          <p className="">Address: 123, Sonar Bangla Road, Dhaka, Bangladesh</p>
         </div>
       </div>
     </div>
