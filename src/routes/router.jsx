@@ -29,6 +29,7 @@ import EditStories from "../dashboard/EditStories";
 import Payment from "../pages/Payment";
 import RedirectToHome from "../components/RedirectToHome";
 import PrivateRoute from "./PrivateRoute";
+import ContactUs from "../pages/ContactUs";
 
 const router = createBrowserRouter([
   // Basic Layout Routes
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home></Home> },
       { path: "community", element: <CommunityPage></CommunityPage> },
       { path: "about-us", element: <AboutUs></AboutUs> },
+      { path: "contact-us", element: <ContactUs></ContactUs> },
       { path: "trips", element: <AllTrips></AllTrips> },
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
