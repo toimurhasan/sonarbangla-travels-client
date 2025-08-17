@@ -7,13 +7,13 @@ const Overview = () => {
         {/* Text Content */}
         <div>
           <motion.h2
-            initial={{ y: -10, opacity: 0 }}
-            animate={{ y: [-10, 0, -10], opacity: [0, 1, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            // initial={{ y: -10, opacity: 0 }}
+            // animate={{ y: [-10, 0, -10], opacity: [0, 1, 0] }}
+            // transition={{
+            //   duration: 4,
+            //   repeat: Infinity,
+            //   ease: "easeInOut",
+            // }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
             Discover Bangladesh Now
