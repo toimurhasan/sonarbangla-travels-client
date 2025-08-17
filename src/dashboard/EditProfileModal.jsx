@@ -26,7 +26,7 @@ const EditProfileModal = ({ currentUser, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black text-white bg-opacity-50 flex items-center justify-center z-50">
       <div className=" rounded-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
         <form onSubmit={handleUpdate} className="space-y-4">
@@ -69,7 +69,7 @@ const EditProfileModal = ({ currentUser, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 cursor-pointer bg-gray-300 rounded hover:bg-gray-400"
+              className="px-4 py-2 cursor-pointer bg-gray-300 rounded hover:bg-gray-400 text-black"
               disabled={loading}
             >
               Cancel
