@@ -40,7 +40,7 @@ const AdminManageProfile = () => {
             <p>Role: Admin</p>
             <button
               onClick={() => setShowModal(true)}
-              className="mt-2 px-4 py-1 bg-blue-600  rounded cursor-pointer"
+              className="btn btn-primary"
             >
               Edit Profile
             </button>
