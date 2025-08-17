@@ -50,10 +50,13 @@ const Navbar = () => {
         <NavLink to={"/community"}>Community</NavLink>
       </li>
       <li>
-        <NavLink to={"/about-us"}>About Us</NavLink>
+        <NavLink to={"/trips"}>Trips</NavLink>
       </li>
       <li>
-        <NavLink to={"/trips"}>Trips</NavLink>
+        <NavLink to={"/about-us"}>About</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/contact-us"}>Contact</NavLink>
       </li>
     </>
   );
